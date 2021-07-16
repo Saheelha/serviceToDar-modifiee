@@ -1,0 +1,1195 @@
+{% extends "base.html.twig" %}
+{% block title %}Accueil{% endblock %}
+{% block body %}
+  <br> <br> <br>
+<style>
+  footer{
+    background-color: #2e2f44;
+    width: 100%;
+    color: white;
+    height: auto;
+    padding-top: 10px;
+    position: relative;
+    bottom: 0;
+    font-family: calibre;
+    margin-top: 25px;
+  }
+  footer div i{
+    color: white;
+  }
+  footer i:hover{
+        color: grey;
+      }
+
+      .titre{
+        color: #2c334e;
+        font-size: xx-large;
+        text-decoration: none;
+        text-transform: uppercase;
+		font-weight:bold;
+      }
+      .titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+      .l{
+        font-family: Arial, Helvetica, sans-serif;
+        text-decoration: none;
+        color: black;
+      }
+      .l:hover{
+        text-decoration: underline;
+        color: navy;
+        font-style: italic;
+      }
+      .categorie-titre{
+        font-size: large;
+        font-family: Arial, Helvetica, sans-serif;
+        color: cornflowerblue;
+      }
+      .categorie-titre span:hover{
+        text-decoration: dashed;
+        color: crimson;
+        background-color: yellowgreen;
+      }
+      .description{
+        font-family: Arial, Helvetica, sans-serif;
+        color: black;
+        padding: 25px;
+        border:  1px dashed white ;
+        background-color: whitesmoke;
+        margin-top: 25px;
+      }
+      .description:hover{
+        text-decoration: underline;
+        color: chocolate;
+        background-color: #FFFF99;
+      }
+
+      #staticBackdrop{
+        width: 100%;
+        height: 100%;
+      }
+      .image{
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        height: 50%;
+      }
+      .temoniage{
+        background-color: white;
+      }
+      .carte{
+        color: white;
+        background-color: #2c334e;
+        margin-bottom: 25px;
+        margin-top: 25px;
+        font-family: Arial, Helvetica, sans-serif;
+        text-align: center;
+        padding: 25px;
+      }
+      .carte2{
+        color: white;
+        background-color: #2c334e;
+        border: 1px solid;
+        padding: 10px;
+        box-shadow: 5px 10px 8px #888888;
+      }
+
+      .fleche:hover{
+        color: gold;
+      }
+      i{
+        color: black;
+      }
+      hr{
+        text-align: center;
+      }
+      .afficher-categorie a img{
+        padding: 5px;
+        border-radius: 30px;
+        /* border: 4px solid blue; */
+        margin-top: 10px;
+        width: 200px;
+        height: auto;
+        display: inline;
+      }
+      .afficher-categorie{
+        transition: transform .2s;
+        margin-bottom: 5px;
+      }
+      .afficher-categorie:hover{
+        transform: scale(1.25);
+      }
+      .cat{
+        width: 100px;
+        height: 100px;
+      }
+      .sous-titre{
+        margin-top: 10px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: large;
+        color: black;
+        font-weight: bold;
+      }
+      .modal-t{
+        padding: auto;
+      }
+
+    .presentation,label,button,footer{
+      font-size: large;
+    }
+
+    body, html {
+    height: 100%;
+}
+
+/* The hero image */
+.hero-image {
+  /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("{{ asset('/img/house.jpg') }}");
+
+  /* Set a specific height */
+  height: 80%;
+
+  /* Position and center the image to scale nicely on all screens */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+/* Place text in the middle of the image */
+.hero-text {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+.hero-text button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 10px 25px;
+  color: black;
+  background-color: #ddd;
+  text-align: center;
+  cursor: pointer;
+}
+.hero-text p{
+  font-size: x-large;
+}
+.hero-text button:hover {
+  background-color: #555;
+  color: white;
+}
+.cl{
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+#t1,#t2,#t3,#t4{
+  text-decoration:none;
+  color: black;
+
+
+}
+#t1:hover{
+  text-decoration: underline;
+}
+#t2:hover{
+  text-decoration: underline;
+}
+#t3:hover{
+  text-decoration: underline;
+}
+#t4:hover{
+  text-decoration: underline;
+}
+.blockquote-footer{
+  color: white;
+}
+.ctn{
+  margin-left: 80px;
+  margin-right: 80px;
+}
+.accueilp{
+  font-family: calibre;
+  font-weight: bold;
+  color:#2c334e;
+  font-size: large;
+  margin-bottom: 25px;
+  /* margin-left: 80px; */
+}
+.i{
+
+  color: #2c334e;
+  font-size: large;
+  font-style: justify;
+}
+
+.btn-accueil{
+  background-color: #2c334e;
+  color:white;
+  font-family: calibre;
+  text-align: center;
+  /* margin-left: 50%;
+  margin-right: 50%; */
+  /* width: 250px; */
+  margin-bottom: 25px;
+  font-size: large;
+
+}
+@media only screen and (max-width: 480px) {
+  .ctn{
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.i{
+  display: none;
+}
+.btn-accueil{
+  font-size: medium;
+}
+.accueilp{
+  font-size: medium;
+}
+}
+mark{
+  background-color:rgb(17, 179, 17);
+  text-decoration: underline;
+}
+@media only screen and (max-width: 768px){
+  .ctn{
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.i{
+  display: none;
+}
+.btn-accueil{
+  font-size: medium;
+}
+.accueilp{
+  font-size: medium;
+}
+}
+</style>
+
+<div class="container-fluid"><br><br><br></div>
+
+<div  id="accueil" style="">
+  <div class="ctn text-center" style="background-color: white;">
+    {# <div class="row">
+      <div class="col-12 col-md-12 col-lg-6 col-xxl-6 bg-light">
+        <p style="margin-top: 5px;">
+          L'univers de la construction est près de chez vous.
+          ServicesToDar vous met en relation avec tous les artisans.
+        </p>
+        <a class="btn" href="#">Trouver Artisans</a>
+        <p>
+          Tous ce que vous avez besoins pour facilter vos quotidien.
+        </p>
+      </div>
+      <div class="col-12 col-md-12 col-lg-6 col-xxl-6 bg-light">
+        <img src="{{asset('/img/imgaccueil.PNG')}}" alt="">
+      </div>
+    </div> #}
+    <div class="row">
+      <div class="col-12 col-md-12 col-lg-6 col-xxl-6">
+        <br>
+        <p class="" ><i class="fas fa-circle i"></i>        <i class="fas fa-circle i"></i></p>
+        <p class="" ><i class="fas fa-circle i"></i>        <i class="fas fa-circle i"></i></p>
+        <br>
+        <p class="accueilp">
+          L'univers de la construction est près de chez vous.
+          <br>
+          ServicesToDar vous met en relation avec tous les artisans.
+        </p>
+        <a class="btn btn-accueil" href="{{ path('app_chercher_fournisseurs') }}">Trouver Artisans <i class="fas fa-user-secret" style="color: white;"></i></a>
+        <br>
+        <p class="accueilp">
+          Tous ce que vous avez besoins pour facilter vos quotidien.
+        </p>
+      </div>
+      <div class="col-12 col-md-12 col-lg-6 col-xxl-6">
+        <img src="{{asset('/img/aimg.PNG')}}" class="img-fluid" alt="">
+      </div>
+    </div>
+  </div>
+</div>
+{#  #}
+<div class="container-fluid  mt-5 text-center">
+  {% if commandes|length > 0 %}
+  <div class="row">
+    <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+      <h1 class="titre"><span>Les commandes en attente</span></h1>
+    </div>
+  </div>
+  <div class="row scroll">
+    {% for commande in commandes %}
+      <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12 col-md-12 col-lg-2 col-xxl-2 text-center ">
+                <p><strong>commande N° {{commande.id}}</strong></p>
+              </div>
+              <div class="col-12 col-md-12 col-lg-2 col-xxl-2 mt-2 text-center">
+                <p><mark>Client {{commande.utilisateur.nom}} {{commande.utilisateur.prenom}}</mark></p>
+              </div>
+              <div class="col-12 col-md-12 col-lg-3 col-xxl-3 mt-2 text-center">
+                <!-- <a
+                    href="{{
+                      path('app_genrer_facture_service', {
+                        commande: commande.id
+                      })
+                    }}"
+                    class="btn btn-primary"
+                    >Facture</a
+                  > -->
+                  {% if commande.commandeProduit|length > 0 %}
+                  <a
+                    href="{{
+                      path('app_generate_facture', {
+                        commande: commande.id
+                      })
+                    }}"
+                    class="btn btn-primary"
+                    >Facture</a
+                  >
+                  {% endif %}
+                  {% if commande.serviceCommande|length > 0 %}
+                  <a
+                    href="{{
+                      path('app_genrer_facture_service', {
+                        commande: commande.id
+                      })
+                    }}"
+                    class="btn btn-primary"
+                    >Facture</a
+                  >
+                  {% endif %}
+              </div>
+              <div class="col-12 col-md-12 col-lg-2 col-xxl-2 mt-2 text-center">
+                {% if res < 0 %}
+                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#arretCommande" >Accepter</button>
+                {% else %}
+                {% set link = path('app_commande_accepter',{commande:commande.id}) %}
+                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#confirmation" onclick="choix('{{link}}')" >Accepter</button>
+
+                {% endif %}
+              </div>
+              <div class="col-12 col-md-12 col-lg-3 col-xxl-3 text-center mt-2 ">
+                {% set refuserLink = path('app_refuser_commande',{commande:commande.id}) %}
+                <button class="btn btn-danger"  data-bs-toggle="modal" data-bs-target="#refuser" onclick="refuserCommande('{{refuserLink}}')" >Refuser</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  {% endfor %}
+  </div>
+  <div
+  class="modal fade"
+  id="confirmation"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Voulez-vous vraiment accepter cette commande ?</strong></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          Non
+        </button>
+        <a
+          href="#"
+          class="btn btn-danger"
+          id="effectuer"
+          >Oui</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+  <script>
+  function choix(link){
+    let effectuer=document.getElementById('effectuer');
+    effectuer.href=link;
+  }
+  </script>
+  {% endif %}
+</div>
+{#  #}
+<div
+  class="container-fluid "
+  id="categories"
+>
+  <div class="row text-center mx-lg-3 mx-xxl-5 ">
+    <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+      <!-- <img src="{{asset('/img/categorie2.PNG')}}" alt="" class="rounded mx-auto d-block mb-5 img-thumbnail"  > -->
+      <div class="row mt-5">
+
+        <h1 class="h1 text-center mb-5 titre"><span>Liste des catégories</span></h1>
+        <br>
+        {% for categorie in categories %}
+      {% if loop.index0 < 4 %}
+      <div class=" col-12 col-md-12 col-lg-3 col-xxl-3">
+        <div class="afficher-categorie">
+         <a href="{{path('app_categories_details',{'categorie':categorie.id})}}"><img src="{{ asset('/img/categories/'~ categorie.icone) }}" class="img-fluid cat" alt="{{ categorie.titre }}"></a>
+         {# <p class="text-center sous-titre">{{ categorie.titre }}</p> #}
+        </div>
+      </div>
+      {% endif %}
+
+        {% endfor %}
+
+      </div>
+      <div class="row">
+         <!--
+          Modal catégories
+        -->
+        <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+          <div class="row">
+            <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+            <div class="col-12 col-md-12 col-lg-4 col-xxl-4">
+              <button type="button" class="btn btn-outline-primary text-center mt-5 " data-bs-toggle="modal" data-bs-target="#categorieModal" >Voir la liste complète</button>
+            </div>
+            <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+          </div>
+          <div class="row">
+            <div class="modal fade" id="categorieModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
+              <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="float: right;"></button>
+                   <div class="row">
+                    <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+                    <div class="col-12 col-md-12 col-lg-4 col-xxl-4">
+                     <h1 class="h1 text-center titre mb-5">Liste des catégories </h1>
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+                   </div>
+                    <div class="row">
+                      {% for categorie in categories %}
+                    <div class=" col-12 col-md-12 col-lg-3 col-xxl-3">
+                      <div class="afficher-categorie">
+                       <a href="{{path('app_categories_details',{'categorie':categorie.id})}}"><img src="{{ asset('/img/categories/'~ categorie.icone) }}" class="img-fluid" alt="{{ categorie.titre }}"></a>
+                       <p class="text-center sous-titre">{{ categorie.titre }}</p>
+                      </div>
+                    </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <!--
+          Modal catégories
+        -->
+      </div>
+    </div>
+  </div>
+</div>
+<br><br><br>
+<div class="container-fluid temoniage bg-light">
+  <div class="row mt-5">
+    <div class="col-12 md-12 col-lg-12 col-xxl-12">
+     <!-- <img src="{{asset('/img/temoignages.jpg')}}" alt="" class="rounded mx-auto d-block mb-5 img-thumbnail" width="400" height="400" style="border: 4px solid blue;">-->
+      <h1 class="h1 text-center mb-5 titre"><span>Témoignages</span></h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="row">
+     <div class="col-12 col-md-12 col-lg-3 col-xxl-3 mb-5">
+       <!--Centenue des témoigniage-->
+       <div class="card carte2">
+         <div class="card-body">
+           <div class="card-title"><i class="fa fa-quote-left fa-2x"></i></div>
+           <div class="card-text text-center">
+            <figure class="text-center">
+              <blockquote class="blockquote">
+                <p class="text-center">Grâce a service to dar j'ai pu trouvé un plombier près<span id="t10">...</span><span hidden="true" id="t12">  de chez moi en un rien de temps !</span>
+				<br>
+				<span id="t1">Voir plus</span>
+				</p>
+              </blockquote>
+              <figcaption class="blockquote-footer">
+                Amel H - De Tunis  <cite title="Source Title">Cliente</cite>
+              </figcaption>
+            </figure>
+           </div>
+         </div>
+       </div>
+       <!--Centenue des témoigniage-->
+       </div>
+       <div class="col-12 col-md-12 col-lg-3 col-xxl-3 mb-5">
+        <!--Centenue des témoigniage-->
+        <div class="card carte2">
+          <div class="card-body">
+            <div class="card-title"><i class="fa fa-quote-left fa-2x"></i></div>
+            <div class="card-text text-center">
+              <figure class="text-center">
+                <blockquote class="blockquote">
+                  <p class="text-center">Grâce au professionnalisme de service to dar j'ai <span  id="t21">...</span><br><span hidden='true' id="t22"> pu contacter  mes clients à distance et j'ai pu leur vendre des produits. <br></span>
+                    <span id="t2">Voir plus</span></p>
+                </blockquote>
+                <figcaption class="blockquote-footer">
+                  Salah M - Gabes  <cite title="Source Title">Menuisier</cite>
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+        <!--Centenue des témoigniage-->
+        </div>
+        <div class="col-12 col-md-12 col-lg-3 col-xxl-3 mb-5">
+          <!--Centenue des témoigniage-->
+          <div class="card carte2">
+            <div class="card-body">
+              <div class="card-title"><i class="fa fa-quote-left fa-2x"></i></div>
+              <div class="card-text text-center">
+                <figure class="text-center">
+                  <blockquote class="blockquote">
+                    <p class="text-center">Grâce à Service to dar j'ai trouvé des agences de<span  id="t31">...</span><br><span hidden='true' id="t32">  déménagement prés de chez moi de qualité et de confiance sans aucune perte de temps. Ils proposent des prix abordables. </span>
+                      <span id="t3">Voir plus</span></p>
+                  </blockquote>
+                  <figcaption class="blockquote-footer">
+                    Ahmed L - Tatawine <cite title="Source Title">Client</cite>
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
+          <!--Centenue des témoigniage-->
+          </div>
+          <div class="col-12 col-md-12 col-lg-3 col-xxl-3 mb-5">
+            <!--Centenue des témoigniage-->
+            <div class="card carte2">
+              <div class="card-body">
+                <div class="card-title"><i class="fa fa-quote-left fa-2x"></i></div>
+                <div class="card-text text-center">
+                  <figure class="text-center">
+                    <blockquote class="blockquote">
+                      <p class="text-center">Service to dar est une plateforme qui permet<span id="t41" >...</span><br><span hidden='true' id="t42">  d'échanger des  messages  avec le fournisseur de biens. Je suis contente de leurs services. <br></span>
+                        <span  id="t4">Voir plus</span> </p>
+                    </blockquote>
+                    <figcaption class="blockquote-footer">
+                      Mariem - Sousse <cite title="Source Title">Cliente</cite>
+                    </figcaption>
+                  </figure>
+                </div>
+              </div>
+            </div>
+            <!--Centenue des témoigniage-->
+            </div>
+    </div>
+  </div>
+ </div>
+ <br><br><br><br><br><br>
+ <div class="container">
+   <div class="row" style="padding:25px;">
+     <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+      <!-- <img src="{{asset('/img/qui_nous.png')}}" alt="" class="rounded mx-auto d-block mb-5 img-thumbnail" style="border: 4px solid blue;">!-->
+	   <h1 class="h1 text-center mb-5 titre"><span>Qui sommes nous ?</span></h1>
+       <p class="text-center h4">Services to dar est une application web et mobile créée pour
+        faciliter l'accès aux services de déménageurs et des artisans
+        qu'on a besoin dans notre vie quotidienne et nos événements à
+        travers une méthode moderne qui consiste à créer un réseau
+        social professionnel reliant tous les prestataires de secteur de
+        services et les clients par une plateforme en ligne.</p>
+     </div>
+   </div>
+ </div>
+ <br><br><br><br><br><br>
+ {# <div class="container mt-5" id="contact">
+  <div class="row">
+    <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+      <!--<img src="{{asset('/img/contacter nous.png')}}" alt="" class="rounded mx-auto d-block mb-5 img-thumbnail" width="400" height="400" style="border: 4px solid blue;"> -->
+       <h1 class="h1 text-center titre"><span>Nous contacter</span></h1>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-12 col-md-12 col-lg-6 col-xxl-4">
+      <div class="row mt-5">
+        <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+          <p class="presentation">
+            <a
+            class="l"
+              href="https://www.google.com/maps/search/Manouba+p%C3%B4le+technologique/@36.8077892,10.0723618,17z/data=!3m1!4b1"
+              target="_blank"
+              ><i class="fas fa-map-marker-alt"></i> La Manouba, TN</a
+            >
+          </p>
+          <p class="l presentation"><i class="fas fa-phone-square"></i> Téléphone</p>
+          <p class="l presentation"><i class="fas fa-at"></i> Email contact@saheelha.com</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-12 col-lg-6 col-xxl-4">
+    </div>
+    <div class="col-12 col-md-12 col-lg-6 col-xxl-4">
+      <div class="row mt-5">
+        <div
+            class="alert alert-success mt-3"
+            role="alert"
+            hidden="true"
+            id="informer"
+          >
+            <p class="text-center">Votre email est envoyé avec succès !</p>
+          </div>
+          {{ form_start(form) }}
+          <div class="form-group">
+            <div class="row">
+              <div class="col">
+                {{
+                  form_row(form.nom, {
+                    attr: { class: "form-control", placeholder: "Nom..." }
+                  })
+                }}
+                <div
+                  id="errorName"
+                  class="alert alert-danger"
+                  role="alert"
+                  hidden="true"
+                >
+                  Le nom est obligatoire !
+                </div>
+              </div>
+              <div class="col">
+                {{
+                  form_row(form.email, {
+                    attr: { class: "form-control", placeholder: "Email..." }
+                  })
+                }}
+                <div
+                  id="errorEmail"
+                  class="alert alert-danger"
+                  role="alert"
+                  hidden="true"
+                >
+                  L'email est obligatoire !
+                </div>
+                <div
+                  id="errorEmailNonValide"
+                  class="alert alert-danger"
+                  role="alert"
+                  hidden="true"
+                >
+                  Votre email est invalide !
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group mt-3">
+            {{
+              form_row(form.message, {
+                attr: {
+                  class: "form-control",
+                  placeholder: "Taper votre Message ici..."
+                }
+              })
+            }}
+            <div
+              id="errorMessage"
+              class="alert alert-danger"
+              role="alert"
+              hidden="true"
+            >
+              Le message ne doit pas être vide !
+            </div>
+          </div>
+          <div class="text-center d-grid gap-2 mt-5 mt-md-5 mt-lg-5 mt-5">
+            <button type="submit" class="btn btn-primary" id="envoyer">
+              Envoyer
+            </button>
+          </div>
+
+          {{ form_end(form) }}
+        </div>
+      </div>
+    </div>
+  </div> #}
+  <div class="container-fluid" id="contact">
+    <div class="row">
+      <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+        <h1 class="h1 text-center titre"><span>Contacts</span></h1>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="row" style="box-shadow: 2px 2px 12px 5px #888888;">
+      <div class="col-12 col-md-12 col-lg-6 col-xxl-6 mb-3" style="background-color: #ecf5f5;">
+        <br>
+     <div class="row mt-5">
+      <div class="col-12 col-md-12 col-lg-3 col-xxl-3"></div>
+      <div class="col-12 col-md-12 col-lg-6 col-xxl-6">
+        {{ form_start(form) }}
+        <div class="form-group">
+          <div class="row">
+            <div class="col">
+              {{
+                form_row(form.nom, {
+                  attr: { class: "form-control", placeholder: "Nom..." }
+                })
+              }}
+              <div
+                id="errorName"
+                class="alert alert-danger"
+                role="alert"
+                hidden="true"
+              >
+                Le nom est obligatoire !
+              </div>
+            </div>
+            <div class="col">
+              {{
+                form_row(form.email, {
+                  attr: { class: "form-control", placeholder: "Email..." }
+                })
+              }}
+              <div
+                id="errorEmail"
+                class="alert alert-danger"
+                role="alert"
+                hidden="true"
+              >
+                L'email est obligatoire !
+              </div>
+              <div
+                id="errorEmailNonValide"
+                class="alert alert-danger"
+                role="alert"
+                hidden="true"
+              >
+                Votre email est invalide !
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group mt-3">
+          {{
+            form_row(form.message, {
+              attr: {
+                class: "form-control",
+                placeholder: "Taper votre Message ici..."
+              }
+            })
+          }}
+          <div
+            id="errorMessage"
+            class="alert alert-danger"
+            role="alert"
+            hidden="true"
+          >
+            Le message ne doit pas être vide !
+          </div>
+        </div>
+        <div class="text-center d-grid gap-2 mt-5 mt-md-5 mt-lg-5 mt-5">
+          <button type="submit" class="btn btn-outline-primary" id="envoyer">
+            Envoyer
+          </button>
+        </div>
+
+        {{ form_end(form) }}
+      </div>
+      <div class="col-12 col-md-12 col-lg-3 col-xxl-3"></div>
+     </div>
+      </div>
+      <div class="col-12 col-md-12 col-lg-6 col-xxl-6 mb-3" style="background-color: #2c334e;">
+        <br>
+        <br>
+        <div class="row mt-5">
+          <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center" >
+            <p class="presentation" style="color: white;">
+              <a style="color: white;"
+              class="l"
+                href="https://www.google.com/maps/search/Manouba+p%C3%B4le+technologique/@36.8077892,10.0723618,17z/data=!3m1!4b1"
+                target="_blank"
+                ><i class="fas fa-map-marker-alt" style="color: white;"></i> Saheelha B18, Pôle Technologique de la Manouba</a
+              >
+            </p>
+            <p class="l presentation" style="color: white;"><i class="fas fa-phone-square" style="color: white;"></i> Téléphone 52817963</p>
+            <p class="l presentation" style="color: white;"><i class="fas fa-at" style="color: white;"></i> Email contact@saheelha.com</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="row">
+   <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+<p style="color:white;"><i class="fa fa-facebook-official w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-twitter w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-instagram w3-hover-opacity" style="color: white;"></i> <br> &copy; 2021 SAHEELHA. Tous les droits sont réservés</p>
+   </div>
+  </div>
+</footer>
+<div
+class="modal fade"
+id="rappel"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Rappel</h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="modal-body">
+      {% if res < 0 %}
+      <p><strong>Votre abonnement a expiré ! </strong></p>
+      {% else %}
+      {% if res == 0 %}
+      <p><strong>Aujourd'hui est le dernier jour de votre abonnement !</strong></p>
+      {% else %}
+      <p><strong>Il vous reste {{res}} jours d'abonnnement !</strong></p>
+      {% endif %}
+
+      {% endif %}
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        Fermer
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+<div
+class="modal fade"
+id="arretCommande"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Rappel</h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Votre abonnement a expiré, vous ne pouvez plus accepter de commandes !</strong></p>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        Fermer
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+<div
+class="modal fade"
+id="echec"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Rappel</h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <p>Votre stock ne vous permet pas d'accepter cette commande ! <br> <strong>Veuiller remplir votre stock</strong></p>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        Fermer
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+<div
+  class="modal fade"
+  id="refuser"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Voulez-vous vraiment refuser cette commande ?</strong></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          Non
+        </button>
+        <a
+          href="#"
+          class="btn btn-danger"
+          id="refuserAction"
+          >Oui</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var ch="Grâce a service to dar j\'ai pu trouvé un plombier pres de chez moi en un rien de temps !";
+console.log(ch.length);
+  var tab=[false,false,false];
+  var nom = document.getElementById("nous_contacter_nom");
+    var email = document.getElementById("nous_contacter_email");
+    var message = document.getElementById("nous_contacter_message");
+    var button=document.getElementById("envoyer");
+    nom.addEventListener('focus',function(e){
+      if (this.value.length == 0) {
+      let error = document.getElementById("errorName");
+      error.hidden = false;
+    } else {
+      let error = document.getElementById("errorName");
+      error.hidden = true;
+      tab[0]=true;
+    }
+    });
+    nom.addEventListener('focusout',function(e){
+      if (this.value.length == 0) {
+      let error = document.getElementById("errorName");
+      error.hidden = false;
+    } else {
+      let error = document.getElementById("errorName");
+      error.hidden = true;
+      tab[0]=true;
+    }
+    });
+    email.addEventListener('focus',function(e){
+      if (this.value.length == 0) {
+      let error = document.getElementById("errorEmail");
+      error.hidden = false;
+      let errorNonValide = document.getElementById("errorEmailNonValide");
+      errorNonValide.hidden = true;
+    } else {
+      let error = document.getElementById("errorEmail");
+      error.hidden = true;
+      if (emailValide(email.value)) {
+        let error = document.getElementById("errorEmailNonValide");
+        error.hidden = true;
+        tab[1]=true;
+      } else {
+        let error = document.getElementById("errorEmailNonValide");
+        error.hidden = false;
+      }
+    }
+    });
+    email.addEventListener('focusout',function(e){
+      if (this.value.length == 0) {
+      let error = document.getElementById("errorEmail");
+      error.hidden = false;
+      let errorNonValide = document.getElementById("errorEmailNonValide");
+      errorNonValide.hidden = true;
+    } else {
+      let error = document.getElementById("errorEmail");
+      error.hidden = true;
+      if (emailValide(email.value)) {
+        let error = document.getElementById("errorEmailNonValide");
+        error.hidden = true;
+        tab[1]=true;
+      } else {
+        let error = document.getElementById("errorEmailNonValide");
+        error.hidden = false;
+      }
+    }
+    });
+    message.addEventListener('focus',function(e){
+      if (this.value.length == 0) {
+      let error = document.getElementById("errorMessage");
+      error.hidden = false;
+      stopSending += 1;
+    } else {
+      let error = document.getElementById("errorMessage");
+      error.hidden = true;
+      tab[2]=true;
+    }
+    });
+    message.addEventListener('focusout',function(e){
+      if (this.value.length == 0) {
+      let error = document.getElementById("errorMessage");
+      error.hidden = false;
+      stopSending += 1;
+    } else {
+      let error = document.getElementById("errorMessage");
+      error.hidden = true;
+      tab[2]=true;
+    }
+    });
+
+    button.addEventListener('click',function(e){
+      if(tab[0]==true && tab[1]==true && tab[2]==true){}
+      else{
+        e.preventDefault();
+      }
+    });
+  // fonction pour valide si une chaine est une addresse mail ou pas
+  function emailValide(email) {
+    if (email.includes("@")) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  var petite=true;
+  function agrandirImage(){
+    let img=document.getElementById('img_a_agrandir');
+    img.style.transform="scale(1.5)";
+    img.style.transition="transform 0.25s ease";
+    petite=false;
+  }
+  function reduireImage(){
+    let img=document.getElementById('img_a_agrandir');
+    img.style.transform="scale(1)";
+    img.style.transition="transform 0.25s ease";
+    petite=true;
+  }
+  function voirImage(){
+    if(petite==true){
+      agrandirImage();
+    }
+    else{
+      reduireImage();
+    }
+  }
+  var t1=document.getElementById('t1');
+  var t2=document.getElementById('t2');
+  var t3=document.getElementById('t3');
+  var t4=document.getElementById('t4');
+  t1.addEventListener('click',function(e){
+    let hide=document.getElementById('t10');
+    let display=document.getElementById('t12');
+    if(hide.hidden==false){
+      hide.hidden=true;
+      display.hidden=false;
+    this.textContent='masquer le reste';
+    }
+    else{
+      hide.hidden=false;
+      display.hidden=true;
+      this.textContent='Voir plus';
+    }
+  });
+  t2.addEventListener('click',function(e){
+    let hide=document.getElementById('t21');
+    let display=document.getElementById('t22');
+    if(hide.hidden==false){
+      hide.hidden=true;
+      display.hidden=false;
+    this.textContent='masquer le reste';
+    }
+    else{
+      hide.hidden=false;
+      display.hidden=true;
+      this.textContent='Voir plus';
+    }
+  });
+  t3.addEventListener('click',function(e){
+    let hide=document.getElementById('t31');
+    let display=document.getElementById('t32');
+    if(hide.hidden==false){
+      hide.hidden=true;
+      display.hidden=false;
+    this.textContent='masquer le reste';
+    }
+    else{
+      hide.hidden=false;
+      display.hidden=true;
+      this.textContent='Voir plus';
+    }
+  });
+  t4.addEventListener('click',function(e){
+    let hide=document.getElementById('t41');
+    let display=document.getElementById('t42');
+    if(hide.hidden==false){
+      hide.hidden=true;
+      display.hidden=false;
+    this.textContent='masquer le reste';
+    }
+    else{
+      hide.hidden=false;
+      display.hidden=true;
+      this.textContent='Voir plus';
+    }
+  });
+  function refuserCommande(link){
+  let refuserCommande=document.getElementById('refuserAction');
+  refuserCommande.href=link;
+  }
+</script>
+{% if erreur == 1 %}
+<script>
+  $(document).ready(function(){
+  $('#echec').modal('show');
+});
+</script>
+{% else %}
+  <script>
+    afficherRappelAbonnemen();
+    function afficherRappelAbonnemen(){
+  $(document).ready(function(){
+  $('#rappel').modal('show');
+});
+}
+  </script>
+{% endif %}
+{% endblock %}

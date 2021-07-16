@@ -1,0 +1,568 @@
+{% extends 'base.html.twig' %} {% block title %}Inscription Fournisseur{%
+endblock %} {% block body %}
+<style>
+  .titre{
+        color:#30a7ab;
+        font-size: xx-large;
+        text-decoration: none;
+        text-transform: uppercase;
+		font-weight:bold;
+      }
+      .titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+  .sous-titre {
+    color:#30a7ab;
+        font-size: x-large;
+        text-decoration: none;
+        text-transform: uppercase;
+        text-align: center;
+		font-weight:bold;
+  }
+  .sous-titre span:hover {
+    text-decoration: none;
+        color: blue;
+        width: auto;
+  }
+  footer{
+    background-color: #1a2c2d;
+    width: 100%;
+    color: white;
+    height: auto;
+    padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    font-family: calibre;
+    margin-top: 25px;
+  }
+  footer div i{
+    color: white;
+  }
+  footer i:hover{
+        color: grey;
+      }
+  .connexion {
+    text-decoration: none;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .connexion:hover {
+    text-decoration: underline;
+    color: dodgerblue;
+  }
+</style>
+<div class="container-fluid">
+  <br /><br /><br />
+  <br /><br />
+</div>
+<div
+  class="container-fluid my-5 mx-md-5 my-md-5 mx-lg-5 mx-xxl-5 my-lg-3 my-xxl-5"
+>
+  <div class="row mt-5 text-center mx-lg-3 mx-xxl-5 my-lg-3 my-xxl-5">
+    <div class="col-12">
+      <h1 class="h1 titre"><span>Inscription</span></h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-3 col-lg-3 col-xxl-4"></div>
+    <div class="col-12 col-md-6 col-lg-6 col-xxl-4">
+      {{ form_start(form) }}
+      {#form_row(form)#}
+      <div class="form-group mt-3">
+        {{
+          form_row(form.nom, {
+            label: "Nom *",
+            attr: { class: "form-control", placeholder: "Nom..." }
+          })
+        }}
+        <div
+          id="errorNom"
+          class="alert alert-danger text-center"
+          role="alert"
+          hidden="true"
+        >
+        Ce champ est obligatoire !
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        {{
+          form_row(form.prenom, {
+            label: "Prénom *",
+            attr: { class: "form-control", placeholder: "Prénom..." }
+          })
+        }}
+        <div
+          id="errorPrenom"
+          class="alert alert-danger text-center"
+          role="alert"
+          hidden="true"
+        >
+        Ce champ est obligatoire !
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        {{
+          form_row(form.email, {
+            label: "Email *",
+            attr: { class: "form-control", placeholder: "Adresse mail..." }
+          })
+        }}
+        <div
+          id="errorEmail"
+          class="alert alert-danger text-center"
+          role="alert"
+          hidden="true"
+        >
+        Ce champ est obligatoire !
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        {{
+          form_row(form.username, {
+            label: "Username *",
+            attr: {
+              class: "form-control",
+              placeholder: "Nom d'utilisateur..."
+            }
+          })
+        }}
+        <div
+          id="errorUsername"
+          class="alert alert-danger text-center"
+          role="alert"
+          hidden="true"
+        >
+        Ce champ est obligatoire !
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        {{
+          form_row(form.password, {
+            label: "Mot de passe *",
+            attr: { class: "form-control", placeholder: "Mot de passe..." }
+          })
+        }}
+        <div
+          id="errorPassword"
+          class="alert alert-danger text-center"
+          role="alert"
+          hidden="true"
+        >
+        Ce champ est obligatoire !
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        {{
+          form_row(form.confirmPassword, {
+            label: "Retaper le mot de passe *",
+            attr: { class: "form-control", placeholder: "Mot de passe..." }
+          })
+        }}
+        <div
+          id="errorConfirmPassword"
+          class="alert alert-danger text-center"
+          role="alert"
+          hidden="true"
+        >
+        Ce champ est obligatoire !
+        </div>
+      </div>
+
+      <div class="form-group mt-3">
+        {{
+          form_row(form.gouvernorat, {
+            label: "Gouvernorat *",
+            attr: { class: "form-control" }
+          })
+        }}
+      </div>
+
+      <div class="form-group mt-3">
+        {{
+          form_row(form.tel, {
+            label: "Téléphone *",
+            attr: {
+              class: "form-control",
+              placeholder: "Numéro de téléphone..."
+            }
+          })
+        }}
+        <div
+          id="errorTel"
+          class="alert alert-danger text-center"
+          role="alert"
+          hidden="true"
+        >
+        Ce champ doit avoir impérativement 8 numéros !
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        {{
+          form_row(form.photo, {
+            label: "Photo ",
+            attr: {
+              class: "form-control",
+              placeholder: "Choisir une photo de profil"
+            }
+          })
+        }}
+      </div>
+
+      <div class="form-group mt-3">
+        {{
+          form_row(form.categorieMetier, {
+            label: "Catégorie Métier *",
+            attr: {
+              class: "form-control"
+            }
+          })
+        }}
+        <div
+          id="errorCategorie"
+          class="alert alert-danger text-center"
+          role="alert"
+          hidden="true"
+        >
+        Ce champ est obligatoire !
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        {{
+          form_row(form.matriculeFiscale, {
+            label: "Matricule Fiscale *",
+            attr: {
+              class: "form-control",
+              placeholder: "Matricule fiscale..."
+            }
+          })
+        }}
+        <div
+          id="errorMatriculeFiscale"
+          class="alert alert-danger text-center"
+          role="alert"
+          hidden="true"
+        >
+        Ce champ est obligatoire !
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        {{
+          form_row(form.description, {
+            label: "Description *",
+            attr: {
+              class: "form-control",
+              placeholder: "Parler un peu de vous..."
+            }
+          })
+        }}
+        <div
+          id="errorDescription"
+          class="alert alert-danger text-center"
+          role="alert"
+          hidden="true"
+        >
+        Ce champ est obligatoire !
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        {{
+          form_row(form.adresse, {
+            label: "Adresse *",
+            attr: {
+              class: "form-control",
+              placeholder: "Adresse..."
+            }
+          })
+        }}
+        <div
+          id="errorAdresse"
+          class="alert alert-danger text-center"
+          role="alert"
+          hidden="true"
+        >
+        Ce champ est obligatoire !
+        </div>
+      </div>
+      <div class="text-center d-grid gap-2 mt-5 mt-md-5 mt-lg-5 mt-5">
+        <button type="submit" class="btn btn-primary" id="envoyer">
+          S'inscrire
+        </button>
+      </div>
+      {{ form_end(form) }}
+      <div class="row text-center mt-5">
+        <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+          <p>Vous avez déjà un compte ?</p>
+          <a href="{{ path('app_login') }}" class="btn btn-link connexion"
+            >Connecter vous
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-3 col-lg-3 col-xxl-4"></div>
+  </div>
+</div>
+<div class="container-fluid">
+  <br><br><br><br><br>
+</div>
+<footer 
+>
+  <div>
+    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+  <i class="fa fa-instagram w3-hover-opacity"></i>
+  <i class="fa fa-snapchat w3-hover-opacity"></i>
+  <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+  <i class="fa fa-twitter w3-hover-opacity"></i>
+  <i class="fa fa-linkedin w3-hover-opacity"></i>
+  <p class="w3-medium">
+    créée par
+    <a href="#"
+      >Saheelha</a
+    >
+  </p>
+  </div>
+</footer>
+<script>
+  // declaration avec le dom
+  var valide = [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+  ];
+  var envoyer = document.getElementById("envoyer");
+  var nom = document.getElementById("sign_in_fournisseur_nom");
+  var prenom = document.getElementById("sign_in_fournisseur_prenom");
+  var email = document.getElementById("sign_in_fournisseur_email");
+  var username = document.getElementById("sign_in_fournisseur_username");
+  var password = document.getElementById("sign_in_fournisseur_password");
+  var confirmPassword = document.getElementById(
+    "sign_in_fournisseur_confirmPassword"
+  );
+  var adresse = document.getElementById("sign_in_fournisseur_adresse");
+  var tel = document.getElementById("sign_in_fournisseur_tel");
+  var categorie = document.getElementById(
+    "sign_in_fournisseur_categorieMetier"
+  );
+  var matriculeFiscale = document.getElementById(
+    "sign_in_fournisseur_matriculeFiscale"
+  );
+  var description = document.getElementById("sign_in_fournisseur_description");
+  // Gestion des evénements avec eventListener
+  nom.addEventListener("focus", function (e) {
+    if (this.value.length == 0) {
+      let error = document.getElementById("errorNom");
+      error.hidden = false;
+      valide[0] = false;
+    }
+  });
+  nom.addEventListener("focusout", function (e) {
+    if (this.value.length > 0) {
+      let error = document.getElementById("errorNom");
+      error.hidden = true;
+      valide[0] = true;
+    } else {
+      valide[0] = false;
+    }
+  });
+  //////////
+  prenom.addEventListener("focus", function (e) {
+    if (this.value.length == 0) {
+      let error = document.getElementById("errorPrenom");
+      error.hidden = false;
+      valide[1] = false;
+    }
+  });
+  prenom.addEventListener("focusout", function (e) {
+    if (this.value.length > 0) {
+      let error = document.getElementById("errorPrenom");
+      error.hidden = true;
+      valide[1] = true;
+    } else {
+      valide[1] = false;
+    }
+  });
+  ///////////////////////
+  email.addEventListener("focus", function (e) {
+    if (this.value.length == 0) {
+      let error = document.getElementById("errorEmail");
+      error.hidden = false;
+      valide[2] = false;
+    }
+  });
+  email.addEventListener("focusout", function (e) {
+    if (this.value.length > 0) {
+      let error = document.getElementById("errorEmail");
+      error.hidden = true;
+      valide[2] = true;
+    } else {
+      valide[2] = false;
+    }
+  });
+  //////////////////////////
+  username.addEventListener("focus", function (e) {
+    if (this.value.length == 0) {
+      let error = document.getElementById("errorUsername");
+      error.hidden = false;
+      valide[3] = false;
+    }
+  });
+  username.addEventListener("focusout", function (e) {
+    if (this.value.length > 0) {
+      let error = document.getElementById("errorUsername");
+      error.hidden = true;
+      valide[3] = true;
+    } else {
+      valide[3] = false;
+    }
+  });
+  ////////////////
+  password.addEventListener("focus", function (e) {
+    if (this.value.length == 0) {
+      let error = document.getElementById("errorPassword");
+      error.hidden = false;
+      valide[4] = false;
+    }
+  });
+  password.addEventListener("focusout", function (e) {
+    if (this.value.length > 0) {
+      let error = document.getElementById("errorPassword");
+      error.hidden = true;
+      valide[4] = true;
+    } else {
+      valide[4] = false;
+    }
+  });
+  //////////////////
+  confirmPassword.addEventListener("focus", function (e) {
+    if (this.value.length == 0) {
+      let error = document.getElementById("errorConfirmPassword");
+      error.hidden = false;
+      valide[5] = false;
+    }
+  });
+  confirmPassword.addEventListener("focusout", function (e) {
+    if (this.value.length > 0) {
+      let error = document.getElementById("errorConfirmPassword");
+      error.hidden = true;
+      valide[5] = true;
+    } else {
+      valide[5] = false;
+    }
+  });
+  //////////////////////
+  tel.addEventListener("focus", function (e) {
+    if (this.value.length == 0) {
+      let error = document.getElementById("errorTel");
+      error.hidden = false;
+      valide[6] = false;
+    }
+  });
+  tel.addEventListener("focusout", function (e) {
+    if (this.value.length > 0) {
+      let error = document.getElementById("errorTel");
+      error.hidden = true;
+      valide[6] = true;
+    } else {
+      valide[6] = false;
+    }
+  });
+  //////////////
+  categorie.addEventListener("focus", function (e) {
+    if (this.value.length == 0) {
+      let error = document.getElementById("errorCategorie");
+      error.hidden = false;
+      valide[7] = false;
+    }
+  });
+  categorie.addEventListener("focusout", function (e) {
+    if (this.value.length > 0) {
+      let error = document.getElementById("errorCategorie");
+      error.hidden = true;
+      valide[7] = true;
+    } else {
+      valide[7] = false;
+    }
+  });
+  ////////////
+  matriculeFiscale.addEventListener("focus", function (e) {
+    if (this.value.length == 0) {
+      let error = document.getElementById("errorMatriculeFiscale");
+      error.hidden = false;
+      valide[8] = false;
+    }
+  });
+  matriculeFiscale.addEventListener("focusout", function (e) {
+    if (this.value.length > 0) {
+      let error = document.getElementById("errorMatriculeFiscale");
+      error.hidden = true;
+      valide[8] = true;
+    } else {
+      valide[8] = false;
+    }
+  });
+  ////////////
+  description.addEventListener("focus", function (e) {
+    if (this.value.length == 0) {
+      let error = document.getElementById("errorDescription");
+      error.hidden = false;
+      valide[9] = false;
+    }
+  });
+  description.addEventListener("focusout", function (e) {
+    if (this.value.length > 0) {
+      let error = document.getElementById("errorDescription");
+      error.hidden = true;
+      valide[9] = true;
+    } else {
+      valide[9] = false;
+    }
+  });
+  adresse.addEventListener("focus", function (e) {
+    if (this.value.length == 0) {
+      let error = document.getElementById("errorAdresse");
+      error.hidden = false;
+      valide[10] = false;
+    } else {
+      let error = document.getElementById("errorAdresse");
+      error.hidden = true;
+      valide[10] = true;
+    }
+  });
+  adresse.addEventListener("focusout", function (e) {
+    if (this.value.length == 0) {
+      let error = document.getElementById("errorAdresse");
+      error.hidden = false;
+      valide[10] = false;
+    } else {
+      let error = document.getElementById("errorAdresse");
+      error.hidden = true;
+      valide[10] = true;
+    }
+  });
+  envoyer.addEventListener("click", function (e) {
+    if (isValide() == false) {
+      e.preventDefault();
+    }
+  });
+  function isValide() {
+    let i = 0;
+    let test = true;
+    while (i < valide.length) {
+      if (valide[i] == false) {
+        return false;
+      }
+      i += 1;
+    }
+    return true;
+  }
+</script>
+{% endblock %}

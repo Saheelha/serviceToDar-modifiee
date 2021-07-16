@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+     <style>
+      .p {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: larger;
+      }
+      .titre {
+        font-size: x-large;
+        font-weight: bold;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .container {
+        margin: 25px;
+        text-align: justify;
+      }
+      .btn {
+        text-decoration: underline;
+      }
+      .btn:hover {
+        text-decoration: underline;
+        color: blue;
+      }
+      .servicestodar {
+        font-weight: bold;
+        text-transform: capitalize;
+      }
+    </style>
+  </head>
+  <body>
+    {% block body %}
+    <div class="container">
+      <h1 class="titre">
+        Bonjour {{client.username}}
+      </h1>
+      <p class="p">
+        Nous vous informons que le fournisseur {{fournisseur.nom}} {{fournisseur.prenom}} a accepté  votre commande le <span class="servicestodar">{{tempsAcceptation|date('d/m/y')}}</span>
+      </p>
+      <p class="p">
+        Nous tenons à vous informer également que votre commande vous sera livrée aux plus tard  <span class="servicestodar">{{dateD|date('d/m/y')}}</span>
+      </p>
+      <p class="p">
+        Cordialement <span class="servicestodar">ServicesToDar</span>
+      </p>
+    </div>
+    {% endblock %}
+  </body>
+</html>

@@ -1,0 +1,165 @@
+{% extends 'base.html.twig' %} {% block title %}Les catégories {% endblock %} {%
+block body %}
+<style>
+  .titre{
+        color:#30a7ab;
+        font-size: xx-large;
+        text-decoration: none;
+        text-transform: uppercase;
+		font-weight:bold;
+      }
+      .titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+      .sous-titre{
+        color:#30a7ab;
+        font-size: x-large;
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+      .sous-titre span:hover{
+        text-decoration: underline;
+        color: blue;
+      }
+    .carte{
+      width: fit-content;
+    }
+    .image-img {
+    width: 200px;
+    height: 200px;
+  }
+  footer{
+    background-color: #1a2c2d;
+    width: 100%;
+    color: white;
+    height: auto;
+    padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    font-family: calibre;
+    margin-top: 25px;
+  }
+  footer div i{
+    color: white;
+  }
+  footer i:hover{
+        color: grey;
+      }
+    
+</style>
+<div class="Container-fluid">
+  <br><br><br><br><br>
+</div>
+<div class="container-fluid">
+  <div class="row mb-5">
+    <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+      <h1 class="titre"><span>Les catégories métier</span></h1>
+    </div>
+  </div>
+  <div class="row">
+    {% if categories|length > 0 %}
+    {% for  categorie in categories %}
+      <div class="col-12 col-md-12 col-lg-3 col-xxl-3">
+        <div class="card">
+          <div class="card-body">
+            <img src="{{ asset('/img/categories/'~ categorie.icone) }}" alt="{{categorie.titre}}" class="img-fluid img-thumbnail  mx-auto d-block image-img">
+            <div class="card-title text-center"><h1 class="sous-titre"><span>{{categorie.titre}}</span></h1></div>
+            <div class="card-text">
+              <div class="row text-center">
+               
+      
+      
+                <div class="col-4 col-md-4 col-lg-4 col-xxl-4 text-center">
+                   <a href="{{path('app_categories_details',{'categorie':categorie.id})}}" class="btn btn-info text-center btn-sm">Détails</a>
+                  </div>
+                <div class="col-4 col-md-4 col-lg-4 col-xxl-4">
+                  <a href="{{path('app_categorie_update',{'categorie':categorie.id})}}" class="btn btn-warning text-center btn-sm">Modifier</a>
+                </div>
+                <div class="col-4 col-md-4 col-lg-4 col-xxl-4">
+                  {% if categorie.utilisateurs|length == 0 %}
+                  {% set link = path('app_categorie_delete',{'categorie':categorie.id}) %}
+                  <button class="btn btn-danger text-center btn-sm" data-bs-toggle="modal" data-bs-target="#m" onclick="choix('{{link}}')">Supprimer</button>
+                  {% else %}
+                  <button class="btn btn-danger text-center btn-sm" data-bs-toggle="modal" data-bs-target="#impossible_a_Supprimer" >Supprimer</button>
+                  {% endif %}
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    {% else %}
+      <div class="col-12 col-md-12 col-lg-4 col-xxl-4 text-center"></div>
+      <div class="col-12 col-md-12 col-lg-4 col-xxl-4 text-center">
+        <div class="alert alert-info" role="alert">
+          <p>Aucune catégorie n'est disponible pour le moment !</p>
+        </div>
+      </div>
+      <div class="col-12 col-md-12 col-lg-4 col-xxl-4 text-center"></div>
+    {% endif %}
+  </div>
+  <div class="row mt-5">
+    <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+      <a href="{{path('app_categorie_add')}}" class="btn btn-primary">Ajouter une catégorie</a>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <br><br><br><br><br>
+</div>
+<footer>
+  <div class="row">
+   <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+<p style="color:white;"><i class="fa fa-facebook-official w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-twitter w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-instagram w3-hover-opacity" style="color: white;"></i> <br> &copy; 2021 SAHEELHA. Tous les droits sont réservés</p>
+   </div>
+  </div>
+</footer>
+<div class="modal fade" id="m" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Êtes-vous sur de vouloir supprimer cette catégories ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" style="right:5px;">Annuler</button>
+        <a href="#" class="btn btn-danger" style="left: 5px;" id="action">Supprimer</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="impossible_a_Supprimer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Rappel</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Vous ne pouvez pas supprimer cette catégorie métier, car elle contient des fournisseurs.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="right:5px;">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+  {{ include("@MercurySeriesFlashy/flashy.html.twig") }}
+  <script>
+function choix(i){
+  let a=document.getElementById('action');
+  a.href=i;
+}
+ 
+  </script>
+{% endblock %}

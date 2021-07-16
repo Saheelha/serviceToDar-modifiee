@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<div class="container-fluid">
+    <br><br><br><br><br><br><br><br><br><br><br>
+</div>
+<div class="container-fluid">
+    {% for commande in commandes %}
+    {% extends "base.html.twig" %}
+    {% block body %}
+    <div class="container-fluid">
+        <br><br><br><br><br><br><br><br><br><br><br>
+    </div>
+    {% for commande in commandes %}
+        <p>commande fait le {{commande.createdAt|date('d-m-y')}}</p>
+        <p>Par {{commande.utilisateur.nom}} {{commande.utilisateur.prenom}}</p>
+        {% if commande.commandeProduit|length > 0 %}
+        {% for produit in commande.commandeProduit %}
+        <a href="{{path('app_generate_facture',{'commande':commande.id})}}"> voir détails</a>
+        {% endfor %}
+        {% endif %}
+        {% if commande.serviceCommande|length > 0 %}
+        {% for service in commande.serviceCommande %}
+        <a href="{{path('app_genrer_facture_service',{'commande':commande.id})}}"> voir détails</a>
+        {% endfor %}
+        {% endif %}
+    {% endfor %}
+    {% endblock %}
+    {% endfor %}
+</div>
+{% endblock %}

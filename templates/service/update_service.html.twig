@@ -1,0 +1,273 @@
+{% extends 'base.html.twig' %} {% block title %}Modifier un service{% endblock %}
+{% block body %}
+<style>
+  .titre{
+        color:#30a7ab;
+        font-size: xx-large;
+        text-decoration: none;
+        text-transform: uppercase;
+		font-weight:bold;
+      }
+      .titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+      footer{
+    background-color: #1a2c2d;
+    width: 100%;
+    color: white;
+    height: auto;
+    padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    font-family: calibre;
+    margin-top: 25px;
+  }
+  footer div i{
+    color: white;
+  }
+  footer i:hover{
+        color: grey;
+      }
+    .imgs-service{
+      width: 100px;
+      height: 100px;
+    }
+</style>
+<div class="container-fluid">
+  <br /><br /><br />
+  <br /><br />
+</div>
+<div
+  class="container-fluid my-5 mx-md-5 my-md-5 mx-lg-5 mx-xxl-5 my-lg-3 my-xxl-5"
+>
+  <div class="row mt-5 text-center mx-lg-3 mx-xxl-5 my-lg-3 my-xxl-5">
+    <div class="col-12">
+      <h1 class="titre"><span>Modifier un service</span></h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-3 col-lg-3 col-xxl-4"></div>
+    <div class="col-12 col-md-6 col-lg-6 col-xxl-4">
+      {{ form_start(form) }}
+      {#form_row(form)#}
+      <div class="form-group mt-3">
+        {{
+          form_row(form.nom, {
+            label: "Nom *",
+            attr: { class: "form-control", placeholder: "Nom..." }
+          })
+        }}
+        <div
+          id="errorNom"
+          class="alert alert-danger text-center"
+          role="alert"
+          hidden="true"
+        >
+        Ce champ est obligatoire !
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        {{
+          form_row(form.prix, {
+            label: "Prix *",
+            attr: { class: "form-control", placeholder: "Prix..." }
+          })
+        }}
+        <div
+          id="errorPrix"
+          class="alert alert-danger text-center"
+          role="alert"
+          hidden="true"
+        >
+        Ce champ est obligatoire !
+        </div>
+      </div>
+      
+      
+      <div class="form-group mt-3">
+        {{
+          form_row(form.lienVideo, {
+            label: "Lien d'une vidéo",
+            attr: { class: "form-control", placeholder: "Lien vidéo..." }
+          })
+        }}
+      </div>
+      <div class="form-group mt-3">
+        {{
+          form_row(form.images, {
+            label: "Choisissez vos images ",
+            attr: { class: "form-control" }
+          })
+        }}
+        <div class="row">
+            {% for image in service.images %}
+                <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+                    <img
+                 src="{{asset('/img/services/'~image.titre)}}"
+                 class="img-fluid img-thumbnail imgs-service"
+                 alt="{{ service.nom }}"
+               />
+               <a href="{{path('app_image_service_delete',{'image':image.id})}}" class="btn btn-danger">Supprimer</a>
+                </div>
+            {% endfor %}
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        {{
+          form_row(form.description, {
+            label: "Description *",
+            attr: { class: "form-control", placeholder: "Description..." }
+          })
+        }}
+        <div
+          id="errorDescription"
+          class="alert alert-danger text-center"
+          role="alert"
+          hidden="true"
+        >
+        Ce champ est obligatoire !
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        {{
+          form_row(form.dateReservation, {
+            label: "Délai de réservation *",
+            attr: { class: "form-control", placeholder: "Description..." }
+          })
+        }}
+      </div>
+      <div class="text-center d-grid gap-2 mt-5 mt-md-5 mt-lg-5 mt-5">
+        <button type="submit" class="btn btn-primary" id="envoyer">
+          Modifier
+        </button>
+      </div>
+      {{ form_end(form) }}
+    </div>
+    <div class="col-12 col-md-3 col-lg-3 col-xxl-4"></div>
+  </div>
+</div>
+<div class="container-fluid">
+  <br><br><br><br><br>
+</div>
+<footer>
+  <div class="row">
+   <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+<p style="color:white;"><i class="fa fa-facebook-official w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-twitter w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-instagram w3-hover-opacity" style="color: white;"></i> <br> &copy; 2021 SAHEELHA. Tous les droits sont réservés</p>
+   </div>
+  </div>
+</footer>
+<script>
+  // declaration avec le dom
+  var isValide=[true,true,true];
+ var envoyer=document.getElementById('envoyer');
+ var nom=document.getElementById('ajouter_service_nom');
+ var prix=document.getElementById('ajouter_service_prix');
+ var description=document.getElementById('ajouter_service_description');
+ // gestion des événements
+ ///
+ nom.addEventListener('focus',function(e) {
+   if(this.value.length==0){
+     let error=document.getElementById('errorNom');
+     error.hidden=false;
+     isValide[0]=false;
+   }
+  
+ });
+ nom.addEventListener('focusout',function(e) {
+   if(this.value.length==0){
+     let error=document.getElementById('errorNom');
+     error.hidden=false;
+     isValide[0]=false;
+   }
+   else{
+    let error=document.getElementById('errorNom');
+     error.hidden=true;
+     isValide[0]=true;
+   }
+ });
+ //////////////// Prix
+ prix.addEventListener('focus',function(e) {
+  let a=parseFloat(this.value);
+  if(isNaN(a)==false){
+    if(a<0){
+     let error=document.getElementById('errorPrix');
+     error.hidden=false;
+     isValide[1]=false;
+   }
+   else{
+    let error=document.getElementById('errorPrix');
+     error.hidden=true;
+     isValide[1]=true;
+   }
+  }
+  else{
+    let error=document.getElementById('errorPrix');
+     error.hidden=false;
+     isValide[1]=false;
+  }
+  
+ });
+ prix.addEventListener('focusout',function(e) {
+  let a=parseFloat(this.value);
+  if(isNaN(a)==false){
+    if(a<0){
+     let error=document.getElementById('errorPrix');
+     error.hidden=false;
+     isValide[1]=false;
+   }
+   else{
+    let error=document.getElementById('errorPrix');
+     error.hidden=true;
+     isValide[1]=true;
+   }
+  }
+  else{
+    let error=document.getElementById('errorPrix');
+     error.hidden=false;
+     isValide[1]=false;
+  }
+ });
+ /////////////////// Description
+ description.addEventListener('focus',function(e) {
+   if(this.value.length==0){
+     let error=document.getElementById('errorDescription');
+     error.hidden=false;
+     isValide[2]=false;
+   }
+  
+ });
+ description.addEventListener('focusout',function(e) {
+   if(this.value.length==0){
+     let error=document.getElementById('errorDescription');
+     error.hidden=false;
+     isValide[2]=false;
+   }
+   else{
+    let error=document.getElementById('errorDescription');
+     error.hidden=true;
+     isValide[2]=true;
+   }
+ });
+ envoyer.addEventListener('click',function(e){
+   console.log(isValide);
+   if(siValide()==false){
+    e.preventDefault();
+   }
+ });
+ function siValide() {
+   let i=0;
+   while(i<isValide.length){
+     if(isValide[i]==false){
+       return false;
+     }
+     i+=1;
+   }
+   return true;
+ }
+ //envoyer.addEventListener('click')
+</script>
+{% endblock %}

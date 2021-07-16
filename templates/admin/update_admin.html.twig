@@ -1,0 +1,358 @@
+{% extends 'base.html.twig' %} {% block title %}Modifier mon compte{% endblock %}
+{% block body %}
+<style>
+  footer{
+    background-color: #1a2c2d;
+    width: 100%;
+    color: white;
+    height: auto;
+    padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    font-family: calibre;
+    margin-top: 25px;
+  }
+  footer div i{
+    color: white;
+  }
+  footer i:hover{
+        color: grey;
+      }
+      .titre{
+        color:#30a7ab;
+        font-size: xx-large;
+        text-decoration: none;
+        text-transform: uppercase;
+		font-weight:bold;
+      }
+      .titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+</style>
+<div class="container-fluid">
+  <br /><br /><br />
+  <br /><br />
+</div>
+<div
+  class="container-fluid my-5 mx-md-5 my-md-5 mx-lg-5 mx-xxl-5 my-lg-3 my-xxl-5"
+>
+  <div class="row mt-5 text-center mx-lg-3 mx-xxl-5 my-lg-3 my-xxl-5">
+    <div class="col-12">
+      <h1 class="titre"><span>Modifier mon compte</span></h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-3 col-lg-3 col-xxl-4"></div>
+    <div class="col-12 col-md-6 col-lg-6 col-xxl-4">
+      {{ form_start(form) }}
+      {#form_row(form)#}
+      <div class="form-group mt-3">
+        {{
+          form_row(form.nom, {
+            label: "Nom *",
+            attr: { class: "form-control", placeholder: "Nom..." }
+          })
+        }}
+        <div
+          id="errorNom"
+          class="alert alert-danger text-center"
+          role="alert"
+          hidden="true"
+        >
+          Ce champs est obligatoire !
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        {{
+          form_row(form.prenom, {
+            label: "Prénom *",
+            attr: { class: "form-control", placeholder: "Prénom..." }
+          })
+        }}
+        <div
+          id="errorPrenom"
+          class="alert alert-danger text-center"
+          role="alert"
+          hidden="true"
+        >
+          Ce champs est obligatoire !
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        {{
+          form_row(form.email, {
+            label: "Email *",
+            attr: { class: "form-control", placeholder: "Adresse mail..." }
+          })
+        }}
+        <div
+          id="errorEmail"
+          class="alert alert-danger text-center"
+          role="alert"
+          hidden="true"
+        >
+          Ce champs est obligatoire !
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        {{
+          form_row(form.username, {
+            label: "Username *",
+            attr: {
+              class: "form-control",
+              placeholder: "Nom d'utilisateur..."
+            }
+          })
+        }}
+        <div
+          id="errorUsername"
+          class="alert alert-danger text-center"
+          role="alert"
+          hidden="true"
+        >
+          Ce champs est obligatoire !
+        </div>
+      </div>
+
+      <div class="form-group mt-3">
+        {{
+          form_row(form.gouvernorat, {
+            label: "Gouvernorat *",
+            attr: { class: "form-control" }
+          })
+        }}
+      </div>
+
+      <div class="form-group mt-3">
+        {{
+          form_row(form.tel, {
+            label: "Téléphone *",
+            attr: {
+              class: "form-control",
+              placeholder: "Numéro de téléphone...",
+              maxlength:"8"
+            }
+          })
+        }}
+        <div
+          id="errorTel"
+          class="alert alert-danger text-center"
+          role="alert"
+          hidden="true"
+        >
+          Ce champs doit avoir impérativement 8 caractères !
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        {{
+          form_row(form.image, {
+            label: "Image ",
+            attr: {
+              class: "form-control",
+              placeholder: "Choisir une image de profil"
+            }
+          })
+        }}
+      </div>
+      <div class="form-group mt-3">
+        <img
+        src="{{asset('/img/photo_profil_utilisateurs/'~ app.user.photo)}}"
+        alt="LOGO"
+        class="img-fluid"
+        width="80"
+        height="80"
+      />
+      </div>
+      <div class="form-group mt-3">
+        {{
+          form_row(form.adresse, {
+            label: "Adresse *",
+            attr: {
+              class: "form-control",
+              placeholder: "Adresse..."
+            }
+          })
+        }}
+        <div
+          id="errorAdresse"
+          class="alert alert-danger text-center"
+          role="alert"
+          hidden="true"
+        >
+          Ce champs est obligatoire !
+        </div>
+      </div>
+      <div class="text-center d-grid gap-2 mt-5 mt-md-5 mt-lg-5 mt-5">
+        <button type="submit" class="btn btn-primary" id="envoyer">
+          Modifier
+        </button>
+      </div>
+      {{ form_end(form) }}
+    </div>
+    <div class="col-12 col-md-3 col-lg-3 col-xxl-4"></div>
+  </div>
+</div>
+<div class="container-fluid">
+  <br><br><br><br><br>
+</div>
+<footer>
+  <div class="row">
+   <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+<p style="color:white;"><i class="fa fa-facebook-official w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-twitter w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-instagram w3-hover-opacity" style="color: white;"></i> <br> &copy; 2021 SAHEELHA. Tous les droits sont réservés</p>
+   </div>
+  </div>
+</footer>
+<script>
+  var valide = [true, true, true, true, true, true, true];
+  var envoyer = document.getElementById("envoyer");
+  var nom = document.getElementById("update_admin_nom");
+  var prenom = document.getElementById("update_admin_prenom");
+  var email = document.getElementById("update_admin_email");
+  var username = document.getElementById("update_admin_username");
+  var adresse=document.getElementById("update_admin_adresse");
+  var tel = document.getElementById("update_admin_tel");
+  // Gestion des evénements avec eventListener
+  nom.addEventListener("focus", function (e) {
+    if (this.value.length == 0) {
+      let error = document.getElementById("errorNom");
+      error.hidden = false;
+      valide[0] = false;
+    }
+  });
+  nom.addEventListener("focusout", function (e) {
+    if (this.value.length > 0) {
+      let error = document.getElementById("errorNom");
+      error.hidden = true;
+      valide[0] = true;
+    } else {
+      valide[0] = false;
+    }
+  });
+  //////////
+  prenom.addEventListener("focus", function (e) {
+    if (this.value.length == 0) {
+      let error = document.getElementById("errorPrenom");
+      error.hidden = false;
+      valide[1] = false;
+    }
+  });
+  prenom.addEventListener("focusout", function (e) {
+    if (this.value.length > 0) {
+      let error = document.getElementById("errorPrenom");
+      error.hidden = true;
+      valide[1] = true;
+    } else {
+      valide[1] = false;
+    }
+  });
+  ///////////////////////
+  email.addEventListener("focus", function (e) {
+    if (this.value.length == 0) {
+      let error = document.getElementById("errorEmail");
+      error.hidden = false;
+      valide[2] = false;
+    }
+  });
+  email.addEventListener("focusout", function (e) {
+    if (this.value.length > 0) {
+      let error = document.getElementById("errorEmail");
+      error.hidden = true;
+      valide[2] = true;
+    } else {
+      valide[2] = false;
+    }
+  });
+  //////////////////////////
+  username.addEventListener("focus", function (e) {
+    if (this.value.length == 0) {
+      let error = document.getElementById("errorUsername");
+      error.hidden = false;
+      valide[3] = false;
+    }
+  });
+  username.addEventListener("focusout", function (e) {
+    if (this.value.length > 0) {
+      let error = document.getElementById("errorUsername");
+      error.hidden = true;
+      valide[3] = true;
+    } else {
+      valide[3] = false;
+      let error = document.getElementById("errorUsername");
+      error.hidden = false;
+    }
+  });
+  //////////////////////
+  tel.addEventListener("focus", function (e) {
+    if (this.value.length <8) {
+      let error = document.getElementById("errorTel");
+      error.hidden = false;
+      valide[4] = false;
+    }
+    else {
+      valide[4] = true;
+      let error = document.getElementById("errorTel");
+      error.hidden = true;
+    }
+  });
+  tel.addEventListener("focusout", function (e) {
+    if (this.value.length == 8) {
+      let error = document.getElementById("errorTel");
+      error.hidden = true;
+      valide[4] = true;
+    } else {
+      valide[4] = false;
+      let error = document.getElementById("errorTel");
+      error.hidden = false;
+    }
+  });
+  adresse.addEventListener('focus',function(e){
+    if (this.value.length == 0) {
+      let error = document.getElementById("errorAdresse");
+      error.hidden = false;
+      valide[5] = false;
+    } else {
+      let error = document.getElementById("errorAdresse");
+      error.hidden = true;
+      valide[5] = true;
+    }
+  });
+  adresse.addEventListener('focusout',function(e){
+    if (this.value.length == 0) {
+      let error = document.getElementById("errorAdresse");
+      error.hidden = false;
+      valide[5] = false;
+    } else {
+      let error = document.getElementById("errorAdresse");
+      error.hidden = true;
+      valide[5] = true;
+    }
+  });
+  //////////////
+
+  ////////////
+
+  ////////////
+
+  envoyer.addEventListener("click", function (e) {
+    if (isValide() == false) {
+      e.preventDefault();
+    }
+  });
+  function isValide() {
+    let i = 0;
+    let test = true;
+    while (i < valide.length) {
+      if (valide[i] == false) {
+        return false;
+      }
+      i += 1;
+    }
+    return true;
+  }
+ 
+</script>
+{% endblock %}

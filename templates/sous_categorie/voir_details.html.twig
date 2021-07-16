@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<div class="container-fluid">
+    <br><br><br><br><br><br><br><br><br><br><br>
+</div>
+<div class="container-fluid">
+    <h3>Details de sous catégorie</h3>
+    <p>Titre : {{sousCategorie.titre}}</p>
+    <p>Description :{{sousCategorie.description}}</p>
+</div>
+<a href="{{path('app_categories_details',{'categorie':sousCategorie.categorie.id})}}">Retourner vers la liste des sous catégories</a>
+{% endblock %}

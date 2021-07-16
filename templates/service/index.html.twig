@@ -1,0 +1,206 @@
+{% extends 'base.html.twig' %} {% block title %}Mes services{% endblock %}
+{% block body %}
+<style>
+  .titre{
+        color:#30a7ab;
+        font-size: xx-large;
+        text-decoration: none;
+        text-transform: uppercase;
+		font-weight:bold;
+      }
+      .titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+      
+      .sous-titre{
+        color:#30a7ab;
+        font-size: x-large;
+        text-decoration: none;
+        text-transform: uppercase;
+        text-align: center;
+		font-weight:bold;
+      }
+      .sous-titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+      .image{
+          width: 250px;
+          height: 250px;
+          margin-bottom: 25px;
+      }
+      footer{
+    background-color: #1a2c2d;
+    width: 100%;
+    color: white;
+    height: auto;
+    padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    font-family: calibre;
+    margin-top: 25px;
+  }
+  footer div i{
+    color: white;
+  }
+  footer i:hover{
+        color: grey;
+      }
+</style>
+<div class="container-fluid">
+  <br /><br /><br />
+  <br /><br />
+</div>
+<div class="container-fluid mt-3">
+  <div class="row mt-4 mb-4">
+    <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+      <h1 class="titre text-center"><span>Mes services</span></h1>
+    </div>
+  </div>
+  {% if services|length > 0 %}
+  {% set emplacement = '' %}
+  <div class="row mt-3">
+    {% for service in services %}
+      <div class="col-12 col-md-12 col-lg-3 col-xxl-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title sous-titre text-center"><span>{{service.nom}}</span></div>
+            {% for image in service.images %}
+                 {% if loop.last %}
+                 <img
+                 src="{{asset('/img/services/'~image.titre)}}"
+                 class="card-img-top img-thumbnail img-fluid image mx-auto d-block"
+                 alt="{{ service.nom }}"
+                 onclick="enlarge(this.src,this.alt)"
+                 data-bs-toggle="modal" data-bs-target="#zoomimage"
+               />
+              
+                 {% endif %}
+               {% endfor %}
+            <div class="card-text text-center mt-2">
+              <div class="row">
+                <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+                  <p><strong>Prix : {{service.prix}}</strong></p>
+                </div>
+              </div>
+              <a href="{{path('app_service_details',{'service':service.id,'res':res})}}" class="btn btn-info mb-3">Voir détails</a>
+              <a href="{{path('app_update_service',{'service':service.id,'res':res})}}" class="btn btn-warning mb-3">Modifier</a>
+              {% set link = path('app_service_delete',{'service':service.id,'res':res}) %}
+              <a href="#" class="btn btn-danger mb-3" data-bs-toggle="modal" data-bs-target="#confirmation" onclick="confimation('{{link}}')">Supprimer</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    <div class="row mt-5 mb-5 ">
+      <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+        <a href="{{path('app_sevice_add',{'res':res})}}" class="btn btn-primary">Ajouter un service</a>
+      </div>
+    </div>
+  </div>
+  
+  {% else %}
+    <div class="row">
+      <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+        <a href="{{path('app_sevice_add',{'res':res})}}" class=" btn btn-primary">Ajouter un service</a>
+      </div>
+    </div>
+  {% endif %}
+</div>
+<div class="container-fluid">
+  <br><br><br><br><br>
+</div>
+<footer>
+  <div class="row">
+   <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+<p style="color:white;"><i class="fa fa-facebook-official w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-twitter w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-instagram w3-hover-opacity" style="color: white;"></i> <br> &copy; 2021 SAHEELHA. Tous les droits sont réservés</p>
+   </div>
+  </div>
+</footer>
+  <!--
+Model to zoom the image
+-->
+<div class="modal fade fullscreen" id="zoomimage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="btn-close mb-5" data-bs-dismiss="modal" aria-label="Close" style="float: right;"></button>
+          <img
+                  src=""
+                  alt=""
+                  class=" img-fluid rounded mx-auto d-block"
+                  id="img_a_agrandir"
+                  width="100%"
+                  height="100%"
+                  
+                />
+                <p class="text-center mt-5" id="description">
+                </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--
+  Model to zoom the image
+  -->
+
+<!--
+Model to confirme before deleteing a product
+-->
+<div
+  class="modal fade"
+  id="confirmation"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>Voulez-vous vraiment supprimer ce service ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          Annuler
+        </button>
+        <a
+          href="#"
+          class="btn btn-danger"
+          id="supprimer"
+          >Supprimer</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+<!--
+Model to confirme before deleteing a product
+-->
+<script>
+    function enlarge(name,info){
+    let image=document.getElementById('img_a_agrandir');
+    image.src=''+name;
+    let description=document.getElementById('description');
+    description.innerHTML=info;
+  }
+  
+  function confimation(link){
+    let supprimer=document.getElementById('supprimer');
+    supprimer.href=""+link;
+  }
+</script>
+{% endblock %}

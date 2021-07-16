@@ -1,0 +1,567 @@
+{% extends 'base.html.twig' %} {% block title %}Mon Profil {% endblock %} {%
+  block body %}
+  <style>
+    .titre{
+        color:white;
+        font-size: xx-large;
+        text-decoration: none;
+        text-transform: uppercase;
+        text-align: center;
+		font-weight:bold;
+      }
+      .titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+  
+    .sous-titre {
+      color:black;
+        font-size: x-large;
+        text-decoration: none;
+        text-transform: uppercase;
+        text-align: center;
+		font-weight:bold;
+    }
+    .sous-titre span:hover {
+      text-decoration: none;
+        color: blue;
+        width: auto;
+    }
+  
+    .image {
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+      height: 50%;
+    }
+    footer{
+    background-color: #1a2c2d;
+    width: 100%;
+    color: white;
+    height: auto;
+    padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    font-family: calibre;
+    margin-top: 25px;
+  }
+  footer div i{
+    color: white;
+  }
+  footer i:hover{
+        color: grey;
+      }
+    .c {
+      margin-top: 50px;
+    }
+    .left {
+      background-color: white;
+      width: 100%;
+      padding: 25px;
+    }
+    .carte {
+      width: 100%;
+    }
+    .hr {
+      color: white;
+      border-top: 3px dashed black;
+    }
+    .table-t {
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .table-t tr {
+      margin-top: 50px;
+    }
+    .table-t th,
+    td {
+      text-align: center;
+      margin-top: 50px;
+    }
+    .titre-information {
+      color: black;
+      font-size: x-large;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    .information {
+      color: grey;
+      font-size: large;
+    }
+    .role {
+      color: blue;
+    }
+    /* .introduction:hover{
+        text-decoration: underline;
+      } */
+      .profil{
+        margin-top: 25px;
+    /*  background-image: url("{{asset('/bg/bg5.jpg')}}");*/
+    background-color: #30a7ab;
+    width: 100%;
+    height: fit-content;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 50px;
+    padding-top: 80px;
+    opacity: 0.8;
+    margin-bottom: 25px;
+      }
+  </style>
+  <div class="container-fluid"><br /><br /><br /><br /></div>
+  <div class="container-fluid mt-5 c">
+   <div class="row">
+   <div class="col-12 col-md-12 col-lg-2 col-xxl-2"></div>
+   <div class="col-12 col-md-12 col-lg-8 col-xxl-8">
+     <div class="row">
+      <div class="col-12 col-md-12 col-lg-3 col-xxl-3" style="background-color: #30a7ab;height:fit-content;">
+        <img src="{{asset('/img/photo_profil_utilisateurs/'~user.photo)}}" class=" mx-auto d-block mt-5" alt="..." style="border-radius: 50%;border:4px solid white;width:200px;height:200px;">
+        <p class="titre-information text-center mt-2" style="color: white;"><b>{{user.nom}} {{user.prenom}}</b></p>
+        <p class="information text-center" style="font-style: italic;color:white;"><b>Fournisseur</b></p>
+        {% if user.abonnement == true %}
+        {% if is_granted('ROLE_CLIENT') %}
+        {% if trouve == true %}
+        <div class="row mb-5">
+          <div class="col-6 col-md-6 col-lg-6 col-xxl-6 text-center ">
+            <a href="{{path('app_consulter_conversation',{otherUser:user.id})}}" class="btn btn-primary"><i class="far fa-envelope"></i></a>
+          </div>
+          <div class="col-6 col-md-6 col-lg-6 col-xxl-6 text-center ">
+            {% set link = path('app_favoris_delete_fournisseur',{user:user.id,choix:0}) %}
+                <button
+                  class="btn btn-light"
+                  data-bs-toggle="modal"
+                  data-bs-target="#confirmation"
+                  onclick="confimation('{{ link }}')"
+                >
+                <i class="fas fa-heart-broken" style="color:red;"></i>
+                </button>
+          </div>
+        </div>
+        {% else %}
+          <div class="row mb-5">
+            <div class="col-6 col-md-6 col-lg-6 col-xxl-6 text-center  ">
+              <a href="{{path('app_consulter_conversation',{otherUser:user.id})}}" class="btn btn-primary"><i class="far fa-envelope"></i></a>
+            </div>
+            <div class="col-6 col-md-6 col-lg-6 col-xxl-6 text-center  ">
+              <a href="{{path('app_favoris_add_fournisseur',{user:user.id})}}" class="btn btn-light"><i class="fas fa-heart" style="color: red;"></i></a>
+            </div>
+          </div>
+        {% endif %}
+        <div class="row">
+          <div class="col-12 col-md-12 col-lg-12 col-xxl-12" role="alert" style="height: fit-content;">
+            <div class="alert alert-success text-center" style="height: fit-content;">
+              <p>Status : disponible </p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% else %}
+        <div class="row">
+          <div class="col-12 col-md-12 col-lg-12 col-xxl-12" role="alert" style="height: fit-content;">
+            <div class="alert alert-danger text-center" style="height: fit-content;">
+              <p>Status : non disponible  </p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+       </div>
+       <div class="col-12 col-md-12 col-lg-9 col-xxl-9 mt-2 mt-lg-0 mt-xxl-0">
+         <h1 class="h1 text-center" style="text-transform: uppercase;">Informations</h1>
+         <hr style="width: 80%;color:gray">
+         <br>
+         <div class="row">
+           <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
+            <p class="titre-information"><b>Email</b></p>
+            <p class="information">{{ user.email }}</p>
+           </div>
+           <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
+            <p class="titre-information"><b>Téléphone</b></p>
+            <p class="information">{{ user.tel }}</p>
+           </div>
+         </div>
+         
+         <div class="row">
+          <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
+           <p class="titre-information"><b>Gouvernorat</b></p>
+           <p class="information">{{ user.gouvernorat }}</p>
+          </div>
+          <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
+           <p class="titre-information"><b>Adresse</b></p>
+           <p class="information">{{ user.adresse }}</p>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
+           <p class="titre-information"><b>Date d'inscription</b></p>
+           <p class="information">{{ user.dateCreation |date('d/m/y') }}</p>
+          </div>
+          <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
+           <p class="titre-information"><b>Nom de l'utilisation</b></p>
+           <p class="information">{{ user.username }}</p>
+          </div>
+        </div>
+       
+        <div class="row">
+          <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
+           <p class="titre-information"><b>Catégorie métier</b></p>
+           <p class="information">{{ user.categorieMetier  }}</p>
+          </div>
+          <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
+           <p class="titre-information"><b>Matricule fiscale</b></p>
+           <p class="information">{{ user.matriculeFiscale }}</p>
+          </div>
+        </div>
+        <!-- ------------------------------- -->
+        <div class="row">
+          <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+            <p class="titre-information">Description</p>
+            <p class="information">{{user.description}}</p>
+          </div>
+        </div>
+        <div class="row">
+          {% if produits|length > 0 and services|length == 0 %}
+          <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+            <button
+                      type="button"
+                      class="btn bg-dark text-light"
+                      data-bs-toggle="modal"
+                      data-bs-target="#produits"
+                    >
+                      Produits
+                    </button>
+          </div>
+          {% endif %}
+          {% if produits|length == 0 and services|length > 0 %}
+          <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+            <button
+                      type="button"
+                      class="btn bg-dark text-light"
+                      data-bs-toggle="modal"
+                      data-bs-target="#services"
+                    >
+                      Services
+                    </button>
+          </div>
+          {% endif %}
+          {% if produits|length > 0 and services|length > 0 %}
+          <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center mb-2">
+            <button
+                      type="button"
+                      class="btn bg-dark text-light"
+                      data-bs-toggle="modal"
+                      data-bs-target="#produits"
+                    >
+                      Produits
+                    </button>
+          </div>
+          <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center mb-2">
+            <button
+                      type="button"
+                      class="btn bg-dark text-light"
+                      data-bs-toggle="modal"
+                      data-bs-target="#services"
+                    >
+                      Services
+                    </button>
+          </div>
+          {% endif %}
+        </div>
+        <!-- ------------------------------- -->
+        
+       </div>
+     </div>
+   </div>
+   <div class="col-12 col-md-12 col-lg-2 col-xxl-2"></div>
+  </div>
+  </div>
+  <div class="container-fluid">
+    <br><br><br><br><br>
+  </div>
+  <footer>
+    <div class="row">
+     <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+  <p style="color:white;"><i class="fa fa-facebook-official w3-hover-opacity" style="color: white;"></i>
+    <i class="fa fa-twitter w3-hover-opacity" style="color: white;"></i>
+    <i class="fa fa-instagram w3-hover-opacity" style="color: white;"></i> <br> &copy; 2021 SAHEELHA. Tous les droits sont réservés</p>
+     </div>
+    </div>
+  </footer>
+  <!--  -->
+  <div
+  class="modal fade"
+  id="confirmation"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Voulez-vous vraiment supprimer ce fournisseur de votre liste des
+          favoris ?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          Annuler
+        </button>
+        <a href="#" class="btn btn-danger" id="supprimer">Supprimer</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% if produits|length > 0 %}
+<div
+  class="modal fade"
+  id="produits"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          liste des produits de {{ user.nom }} {{ user.prenom }}
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        {% for produit in produits %}
+        <div class="row">
+          <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+            {% for image in produit.images %} {% if loop.last %}
+            {% set linkimage =  asset('/img/produits/'~ image.titre ) %}
+            {% set prodLink = path('app_details_produit', { produit: produit.id }) %}
+            <img
+              src="{{asset('/img/produits/'~ image.titre )}}"
+              alt="{{ produit.nom }}"
+              class="img-fluid rounded mx-auto d-block mb-3 image-img"
+              onclick="zoom('{{linkimage}}','{{produit.nom}}','p')"
+            />
+            {% endif %} {% endfor %}
+            <p class="text-center mb-3">{{ produit.nom }}</p>
+            {% if is_granted('ROLE_ADMIN') %}
+            <div class="row mt-3 text-center">
+              <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
+                <p class="mb-3"><strong>Prix :{{produit.prix}} DT</strong></p>
+                <a
+                  href="{{
+                    path('app_details_produit', { produit: produit.id })
+                  }}"
+                  class="btn btn-info"
+                  >Voir détails</a
+                >
+              </div>
+              <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
+                {% set linkP = path('app_produit_delete',{produit:produit.id}) %}
+               <button class="btn btn-danger" onclick="confimationProduit('{{linkP}}')" data-bs-toggle="modal"
+               data-bs-target="#confirmationProduit" data-bs-dismiss="modal">supprimer</button>
+              </div>
+            </div>
+            {% else %}
+            <div class="row mt-3 mb-3">
+              <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+                <a
+                  href="{{
+                    path('app_details_produit', { produit: produit.id })
+                  }}"
+                  class="btn btn-info text-center"
+                  >Voir détails</a
+                >
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <hr>
+        {% endfor %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %} {% if services|length > 0 %}
+<div
+  class="modal fade"
+  id="services"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          liste des services de {{ user.nom }} {{ user.prenom }}
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body text-center">
+        {% for service in services %}
+        <div class="row">
+          <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+            {% for image in service.images %} {% if loop.last %}
+            {% set linkImageS = asset('/img/services/'~ image.titre ) %}
+            <img
+              src="{{asset('/img/services/'~ image.titre )}}"
+              alt="{{ service.nom }}"
+              class="img-fluid rounded mx-auto d-block mb-3 image-img"
+              onclick="zoom('{{linkImageS}}','{{service.nom}}','s')"
+            />
+            {% endif %} {% endfor %}
+            <p class="text-center mb-3">{{ service.nom }}</p>
+            {% if is_granted('ROLE_ADMIN') %}
+            <div class="row mt-3">
+              <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
+                <a
+                  href="{{
+                    path('app_service_details', { service: service.id })
+                  }}"
+                  class="btn btn-info"
+                  >Voir détails</a
+                >
+              </div>
+              <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
+                {% set linkS = path('app_service_delete',{service:service.id}) %}
+               <button class="btn btn-danger" onclick="confimationService('{{linkS}}')"data-bs-toggle="modal"
+               data-bs-target="#confirmationService" data-bs-dismiss="modal" >supprimer</button>
+              </div>
+            </div>
+            {% else %}
+            <div class="row mt-3 mb-3">
+              <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+                <a
+                  href="{{
+                    path('app_service_details', { service: service.id })
+                  }}"
+                  class="btn btn-info text-center"
+                  >Voir détails</a
+                >
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <hr>
+        {% endfor %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+<!--
+Agrandir une image
+-->
+<div
+class="modal fade"
+id="agrandirimg"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog modal-xl">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="titreimg"></h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="modal-body">
+     
+      <img
+              src="#"
+              alt=""
+              class="img-fluid  mx-auto d-block mb-3 image-img"
+              style="width:500px;height:500px;"
+              id="imgaAgrandir"
+            />
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        Fermer
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+<!--
+  Agrandir une image
+-->
+
+  <!--  -->
+  {{ include("@MercurySeriesFlashy/flashy.html.twig") }}
+  <script>
+  function confimation(link) {
+    let supprimer = document.getElementById("supprimer");
+    supprimer.href = "" + link;
+  }
+  function confimationProduit(link) {
+    $('#confirmationProduit').modal('toggle');
+    let supprimer = document.getElementById("supprimerp");
+    supprimer.href = "" + link;
+  }
+  function confimationService(link) {
+    $('#confirmationService').modal('toggle');
+    let supprimer = document.getElementById("supprimers");
+    supprimer.href = "" + link;
+  }
+  function zoom(img,nom,t){
+    let image=document.getElementById('imgaAgrandir');
+    let titre=document.getElementById('titreimg');
+    image.src=img;
+    titre.textContent=nom;
+    if(t=='p'){
+      $(document).ready(function(){
+  $('#produits').modal('hide');
+});
+    }
+    if(t=='s'){
+      $(document).ready(function(){
+  $('#services').modal('hide');
+});
+    }
+   
+$(document).ready(function(){
+  $('#agrandirimg').modal('show');
+});
+  }
+</script>
+  {% endblock %}
+  

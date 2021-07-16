@@ -1,0 +1,1085 @@
+{% extends 'base.html.twig' %} {% block title %}Détails {{service.nom}} {% endblock %}
+{% block body %}
+<style>
+  footer{
+    background-color: #1a2c2d;
+    width: 100%;
+    color: white;
+    height: auto;
+    padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    font-family: calibre;
+    margin-top: 25px;
+  }
+  footer div i{
+    color: white;
+  }
+  footer i:hover{
+        color: grey;
+      }
+
+  .container {
+    margin-top: 150px;
+    padding-top: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 10px;
+  }
+  .titre{
+        color:#30a7ab;
+        font-size: xx-large;
+        text-decoration: none;
+        text-transform: uppercase;
+        text-align: center;
+		font-weight:bold;
+      }
+      .titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+
+
+  .img-prod {
+    width: 100%;
+    height: 400px;
+  }
+  .desplay-card {
+    border-radius: 10%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  .sous-titre{
+    color:#30a7ab;
+        font-size: x-large;
+        text-decoration: none;
+        text-transform: uppercase;
+        text-align: center;
+		font-weight:bold;
+      }
+      .sous-titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+
+  .checked {
+    color: gold;
+  }
+  /* .introduction:hover{
+      text-decoration: underline;
+    } */
+</style>
+<div class="container">
+  <h1 class="titre"><span>Détails Service</span></h1>
+  <div class="row">
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4">
+      {% if service.images|length == 0 %}
+      <div class="alert alert-info">
+        <p class="text-center">Aucune image n'est disponible pour le moment ! </p>
+      </div>
+      {% else %}
+      <div
+      id="carouselExampleControls"
+      class="carousel slide"
+      data-bs-ride="carousel"
+      style="color: black"
+    >
+      <div class="carousel-inner">
+        {% for image in service.images %}
+        {% set linkImageS = asset('/img/services/' ~ image.titre) %} 
+        {% if loop.index0 == 0 %}
+        <div class="carousel-item active text-center">
+          <img
+            src="{{asset('/img/services/' ~ image.titre)}}"
+            class="img-fluid img-thumbnail rounded mx-auto d-block img-prod"
+            alt="..."
+            style="color: black;width: auto;height:auto;"
+            onclick="zoom('{{linkImageS}}','{{service.nom}}')"
+          />
+          {% if is_granted('ROLE_ADMIN') %}
+          {% set linkImage = path('app_image_service_delete',{image:image.id}) %}
+          <button class="btn btn-dark" data-bs-toggle="modal"
+          data-bs-target="#confirmationImage" onclick="confirmationImage('{{linkImage}}')">Supprimer</button>
+          {% endif %}
+        </div>
+        {% else %}
+        <div class="carousel-item text-center">
+          <img
+            src="{{asset('/img/services/' ~ image.titre)}}"
+            class="img-fluid img-thumbnail rounded mx-auto d-block img-prod"
+            alt="..."
+            style="color: black;width: auto;height: auto;"
+            onclick="zoom('{{linkImageS}}','{{service.nom}}')"
+          />
+          {% if is_granted('ROLE_ADMIN') %}
+          {% set linkImage = path('app_image_service_delete',{image:image.id}) %}
+          <button class="btn btn-dark" data-bs-toggle="modal"
+          data-bs-target="#confirmationImage" onclick="confirmationImage('{{linkImage}}')">Supprimer</button>
+          {% endif %}
+        </div>
+        {% endif %} {% endfor %}
+      </div>
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleControls"
+        data-bs-slide="prev"
+        style="color: black"
+      >
+        <span style="color: black"
+          ><i class="fas fa-angle-left fa-5x"></i
+        ></span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleControls"
+        data-bs-slide="next"
+        style="color: black"
+      >
+        <span style="color: black"
+          ><i class="fas fa-angle-right fa-5x"></i
+        ></span>
+      </button>
+    </div>
+      {% endif %}
+    </div>
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4 mt-2">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title">Les informations sur le service</div>
+          <div class="card-text">
+            <p><strong>Prix {{ service.prix }}</strong></p>
+            <p><strong>Description :</strong></p>
+            <p><strong>{{ service.description }}</strong></p>
+            <p><strong>Date de réservation : après  {{service.dateReservation}}  jour(s) de la date de la commande</strong></p>
+          </div>
+        </div>
+      </div>
+      {% if (is_granted('ROLE_ADMIN')) or (is_granted('ROLE_FOURNISSEUR')) %}
+      {% else %}
+      <div class="text-center mt-3">
+        {% if service.utilisateur.abonnement %}
+        <a href="{{path('app_commande_service',{service:service.id})}}" class="btn btn-success">Passer commande</a>
+        {% else %}
+        <a href="#" data-bs-toggle="modal"
+        data-bs-target="#arretCommande" class="btn btn-success">Passer commande</a>
+        {% endif %}
+      </div>  
+      {% endif %}
+      
+    </div>
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+  </div>
+  <div class="row mb-2 mt-2">
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4 text-center">
+      {% if service.lienVideo == '' %}
+      <div class="alert alert-info text-center" role="alert">
+        <p>Aucune vidéo n'est disponible pour le moment !</p>
+       </div>
+      {% else %}
+      <iframe
+        width="100%"
+        height="250"
+        src="{{ service.lienVideo }}"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+      {% if is_granted('ROLE_ADMIN') %}
+      <button class="btn btn-dark mt-3" data-bs-toggle="modal"
+      {% set linkVideo = path('app_service_video',{service:service.id}) %}
+      data-bs-target="#confirmationVideo" onclick="confirmationVideo('{{linkVideo}}')">Supprimer</button>
+      {% endif %}
+      {% endif %}
+    </div>
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+      <h1 class="sous-titre"><span>Liste des avis</span></h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4">
+      {% if is_granted('ROLE_ADMIN') %}
+      {% for avis in service.avis %} {% if loop.index0 <5 %}
+      <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+        <div class="card desplay-card">
+          <div class="card-body">
+            <div class="card-text">
+              <img
+                src="{{asset('/img/photo_profil_utilisateurs/'~ avis.utilisateur.photo)}}"
+                alt="image client"
+                width="50"
+              />
+              <p>
+                {% if avis.note == 1 %}
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star"></span>
+                <span class="fas fa-star"></span>
+                <span class="fas fa-star"></span>
+                <span class="fas fa-star"></span>
+                {% endif %} {% if avis.note == 2 %}
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star"></span>
+                <span class="fas fa-star"></span>
+                <span class="fas fa-star"></span>
+                {% endif %} {% if avis.note == 3 %}
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star"></span>
+                <span class="fas fa-star"></span>
+                {% endif %} {% if avis.note == 4 %}
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star"></span>
+                {% endif %} {% if avis.note == 5 %}
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star checked"></span>
+                {% endif %}
+              </p>
+              <p>{{ avis.contenu }}</p>
+              <p>
+                Envoyé par
+                <span style="font-family: italic"
+                  >{{ avis.utilisateur.nom }}
+                  {{ avis.utilisateur.prenom }}</span
+                >
+                le {{avis.CreatedAt|date('d/m/y h:m:s')}}
+              </p>
+              {% if app.user %} 
+              {% set linkMessage = path('app_avis_service_delete',{avis:avis.id}) %}
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#confirmationSupression"
+                onclick="verifier('{{ linkMessage }}')"
+              >
+                Supprimer
+              </button>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %} {% endfor %}
+      {% else %}
+      {% for avis in service.avis %} {% if loop.index0 <5 %}
+      <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+        <div class="card desplay-card">
+          <div class="card-body">
+            <div class="card-text">
+              <img
+                src="{{asset('/img/photo_profil_utilisateurs/'~ avis.utilisateur.photo)}}"
+                alt="image client"
+                width="50"
+              />
+              <p>
+                {% if avis.note == 1 %}
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star"></span>
+                <span class="fas fa-star"></span>
+                <span class="fas fa-star"></span>
+                <span class="fas fa-star"></span>
+                {% endif %} {% if avis.note == 2 %}
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star"></span>
+                <span class="fas fa-star"></span>
+                <span class="fas fa-star"></span>
+                {% endif %} {% if avis.note == 3 %}
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star"></span>
+                <span class="fas fa-star"></span>
+                {% endif %} {% if avis.note == 4 %}
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star"></span>
+                {% endif %} {% if avis.note == 5 %}
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star checked"></span>
+                <span class="fas fa-star checked"></span>
+                {% endif %}
+              </p>
+              <p>{{ avis.contenu }}</p>
+              <p>
+                Envoyé par
+                <span style="font-family: italic"
+                  >{{ avis.utilisateur.nom }}
+                  {{ avis.utilisateur.prenom }}</span
+                >
+                le {{avis.CreatedAt|date('d/m/y h:m:s')}}
+              </p>
+              {% if app.user %} {% if avis.utilisateur.id == app.user.id %}
+              {% set linkMessage = path('app_avis_service_delete',{avis:avis.id}) %}
+              <button
+                type="button"
+                class="btn btn-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#confirmationSupression"
+                onclick="verifier('{{ linkMessage }}')"
+              >
+                Supprimer
+              </button>
+              {% endif %} {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %} {% endfor %}
+      {% endif %}
+     
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">
+                Tous les avis des clients
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+             {% if is_granted('ROLE_ADMIN') %}
+             {% for avis in service.avis %}
+             <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+               <div class="card">
+                 <div class="card-body">
+                   <div class="card-text">
+                     <img
+                       src="{{asset('/img/photo_profil_utilisateurs/'~ avis.utilisateur.photo)}}"
+                       alt="image client"
+                       width="50"
+                     />
+                     <p>
+                       {% if avis.note == 1 %}
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star"></span>
+                       <span class="fas fa-star"></span>
+                       <span class="fas fa-star"></span>
+                       <span class="fas fa-star"></span>
+                       {% endif %} {% if avis.note == 2 %}
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star"></span>
+                       <span class="fas fa-star"></span>
+                       <span class="fas fa-star"></span>
+                       {% endif %} {% if avis.note == 3 %}
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star"></span>
+                       <span class="fas fa-star"></span>
+                       {% endif %} {% if avis.note == 4 %}
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star"></span>
+                       {% endif %} {% if avis.note == 5 %}
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star checked"></span>
+                       {% endif %}
+                     </p>
+                     <p>{{ avis.contenu }}</p>
+                     <p>
+                       Envoyé par
+                       <span style="font-family: italic"
+                         >{{ avis.utilisateur.nom }}
+                         {{ avis.utilisateur.prenom }}</span
+                       >
+                       le {{avis.CreatedAt|date('d/m/y h:m:s')}}
+                     </p>
+                     {% if app.user %} 
+                     {% set linkMessage = path('app_avis_service_delete',{avis:avis.id}) %}
+                     <button
+                       type="button"
+                       class="btn btn-danger"
+                       data-bs-toggle="modal"
+                       data-bs-target="#confirmationSupression"
+                       data-bs-dismiss="modal"
+                       onclick="verifier('{{ linkMessage }}')"
+                     >
+                       Supprimer
+                     </button>
+                     {% endif %}
+                   </div>
+                 </div>
+               </div>
+             </div>
+             {% endfor %}
+             {% else %}
+             {% for avis in service.avis %}
+             <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+               <div class="card">
+                 <div class="card-body">
+                   <div class="card-text">
+                     <img
+                       src="{{asset('/img/photo_profil_utilisateurs/'~ avis.utilisateur.photo)}}"
+                       alt="image client"
+                       width="50"
+                     />
+                     <p>
+                       {% if avis.note == 1 %}
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star"></span>
+                       <span class="fas fa-star"></span>
+                       <span class="fas fa-star"></span>
+                       <span class="fas fa-star"></span>
+                       {% endif %} {% if avis.note == 2 %}
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star"></span>
+                       <span class="fas fa-star"></span>
+                       <span class="fas fa-star"></span>
+                       {% endif %} {% if avis.note == 3 %}
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star"></span>
+                       <span class="fas fa-star"></span>
+                       {% endif %} {% if avis.note == 4 %}
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star"></span>
+                       {% endif %} {% if avis.note == 5 %}
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star checked"></span>
+                       <span class="fas fa-star checked"></span>
+                       {% endif %}
+                     </p>
+                     <p>{{ avis.contenu }}</p>
+                     <p>
+                       Envoyé par
+                       <span style="font-family: italic"
+                         >{{ avis.utilisateur.nom }}
+                         {{ avis.utilisateur.prenom }}</span
+                       >
+                       le {{avis.CreatedAt|date('d/m/y h:m:s')}}
+                     </p>
+                     {% if app.user %} {% if avis.utilisateur.id == app.user.id
+                     %}
+                     {% set linkMessage = path('app_avis_service_delete',{avis:avis.id}) %}
+                     <button
+                       type="button"
+                       class="btn btn-danger"
+                       data-bs-toggle="modal"
+                       data-bs-target="#confirmationSupression"
+                       data-bs-dismiss="modal"
+                       onclick="verifier('{{ linkMessage }}')"
+                     >
+                       Supprimer
+                     </button>
+                     {% endif %} {% endif %}
+                   </div>
+                 </div>
+               </div>
+             </div>
+             {% endfor %}
+             {% endif %}
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Fermer
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% if  is_granted('ROLE_CLIENT') %}
+      <div class="row mt-2">
+        <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+          <button
+            type="button"
+            class="btn btn-primary mt-2 mb-2"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
+          >
+            Voir la liste totale
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
+            Exprimer votre avis
+          </button>
+        </div>
+      </div>
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-center" id="exampleModalLabel">
+                Exprimer votre avis
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+
+            <form
+            action="{{ path('app_avis_service_ajouter', { 'service': service.id }) }}"
+            method="post"
+          >
+          <div class="form-group mt-5 mb-5 text-center">
+            <input
+              type="radio"
+              name="1_star"
+              id="ajouter_avis_1_star"
+              style="display: none"
+              value="1"
+            />
+            <label
+              for="ajouter_avis_1_start"
+              id="ajouter_avis_l1_star"
+              class="fas fa-star fa-3x"
+            >
+            </label>
+
+            <input
+              type="radio"
+              name="2_star"
+              id="ajouter_avis_2_star"
+              style="display: none"
+              value="2"
+            />
+            <label
+              for="ajouter_avis_2_start"
+              id="ajouter_avis_l2_star"
+              class="fas fa-star fa-3x"
+            ></label>
+
+            <input
+              type="radio"
+              name="3_star"
+              id="ajouter_avis_3_star"
+              style="display: none"
+              value="3"
+            />
+            <label
+              for="ajouter_avis_3_start"
+              id="ajouter_avis_l3_star"
+              class="fas fa-star fa-3x"
+            ></label>
+
+            <input
+              type="radio"
+              name="4_star"
+              id="ajouter_avis_4_star"
+              style="display: none"
+              value="4"
+            />
+            <label
+              for="ajouter_avis_4_start"
+              id="ajouter_avis_l4_star"
+              class="fas fa-star fa-3x"
+            ></label>
+
+            <input
+              type="radio"
+              name="5_star"
+              id="ajouter_avis_5_star"
+              style="display: none"
+              value="5"
+            />
+            <label
+              for="ajouter_avis_5_start"
+              id="ajouter_avis_l5_star"
+              class="fas fa-star fa-3x"
+            ></label>
+          </div>
+          <div class="form-group">
+            <label for="message">Avis</label>
+            <textarea
+              name="message"
+              id="message"
+              cols="30"
+              rows="10"
+              required
+              placeholder="exprimer votre avis..."
+              class="form-control avis-style"
+            ></textarea>
+          </div>
+          <div class="modal-footer text-center">
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
+              Annuler
+            </button>
+            <button type="submit" class="btn btn-primary">Poster</button>
+          </div>
+          </form>
+          </div>
+        </div>
+      </div>
+      <script>
+        var choice = false;
+        var l1 = document.getElementById("ajouter_avis_l1_star");
+        var l2 = document.getElementById("ajouter_avis_l2_star");
+        var l3 = document.getElementById("ajouter_avis_l3_star");
+        var l4 = document.getElementById("ajouter_avis_l4_star");
+        var l5 = document.getElementById("ajouter_avis_l5_star");
+        l1.addEventListener("mouseenter", function (e) {
+          if (choice == false) {
+            this.className = "fas fa-star checked fa-3x";
+          }
+        });
+        l1.addEventListener("mouseleave", function (e) {
+          if (choice == false) {
+            this.className = "fas fa-star fa-3x";
+          }
+        });
+        /** 2éme étoile **/
+        l2.addEventListener("mouseenter", function (e) {
+          //alert('test !');
+          //this.class="hovredStars";
+          if (choice == false) {
+            l1.className = "fas fa-star checked fa-3x";
+            this.className = "fas fa-star checked fa-3x";
+          }
+        });
+        l2.addEventListener("mouseleave", function (e) {
+          if (choice == false) {
+            l1.className = "fas fa-star fa-3x";
+            this.className = "fas fa-star fa-3x";
+          }
+        });
+        /** 3émé étoile **/
+        l3.addEventListener("mouseenter", function (e) {
+          //alert('test !');
+          //this.class="hovredStars";
+          if (choice == false) {
+            l1.className = "fas fa-star checked fa-3x";
+            l2.className = "fas fa-star checked fa-3x";
+            this.className = "fas fa-star checked fa-3x";
+          }
+        });
+        l3.addEventListener("mouseleave", function (e) {
+          if (choice == false) {
+            l1.className = "fas fa-star fa-3x";
+            l2.className = "fas fa-star fa-3x";
+            this.className = "fas fa-star fa-3x";
+          }
+        });
+        /** 4éme étoile **/
+        l4.addEventListener("mouseenter", function (e) {
+          //alert('test !');
+          //this.class="hovredStars";
+          if (choice == false) {
+            l1.className = "fas fa-star checked fa-3x";
+            l2.className = "fas fa-star checked fa-3x";
+            l3.className = "fas fa-star checked fa-3x";
+            this.className = "fas fa-star checked fa-3x";
+          }
+        });
+        l4.addEventListener("mouseleave", function (e) {
+          if (choice == false) {
+            l1.className = "fas fa-star fa-3x";
+            l2.className = "fas fa-star fa-3x";
+            l3.className = "fas fa-star fa-3x";
+            this.className = "fas fa-star fa-3x";
+          }
+        });
+        /** 5éme étoile **/
+        l5.addEventListener("mouseenter", function (e) {
+          //alert('test !');
+          //this.class="hovredStars";
+          if (choice == false) {
+            l1.className = "fas fa-star checked fa-3x";
+            l2.className = "fas fa-star checked fa-3x";
+            l3.className = "fas fa-star checked fa-3x";
+            l4.className = "fas fa-star checked fa-3x";
+            this.className = "fas fa-star checked fa-3x";
+          }
+        });
+        l5.addEventListener("mouseleave", function (e) {
+          if (choice == false) {
+            l1.className = "fas fa-star fa-3x";
+            l2.className = "fas fa-star fa-3x";
+            l3.className = "fas fa-star fa-3x";
+            l4.className = "fas fa-star fa-3x";
+            this.className = "fas fa-star fa-3x";
+          }
+        });
+
+        l1.addEventListener("click", function (e) {
+          let n1 = document.getElementById("ajouter_avis_1_star");
+          n1.checked = true;
+          choice = true;
+          this.className = "fas fa-star checked fa-3x";
+          l2.className = "fas fa-star fa-3x";
+          l3.className = "fas fa-star fa-3x";
+          l4.className = "fas fa-star fa-3x";
+          l5.className = "fas fa-star fa-3x";
+        });
+
+        l2.addEventListener("click", function (e) {
+          let n2 = document.getElementById("ajouter_avis_2_star");
+          n2.checked = true;
+          choice = true;
+          l1.className = "fas fa-star checked fa-3x";
+          this.className = "fas fa-star checked fa-3x";
+          l3.className = "fas fa-star fa-3x";
+          l4.className = "fas fa-star fa-3x";
+          l5.className = "fas fa-star fa-3x";
+        });
+
+        l3.addEventListener("click", function (e) {
+          let n2 = document.getElementById("ajouter_avis_3_star");
+          n2.checked = true;
+          choice = true;
+          l1.className = "fas fa-star checked fa-3x";
+          l2.className = "fas fa-star checked fa-3x";
+          this.className = "fas fa-star checked fa-3x";
+          l4.className = "fas fa-star fa-3x";
+          l5.className = "fas fa-star fa-3x";
+        });
+
+        l4.addEventListener("click", function (e) {
+          let n2 = document.getElementById("ajouter_avis_4_star");
+          n2.checked = true;
+          choice = true;
+          l1.className = "fas fa-star checked fa-3x";
+          l2.className = "fas fa-star checked fa-3x";
+          l3.className = "fas fa-star checked fa-3x";
+          this.className = "fas fa-star checked fa-3x";
+          l5.className = "fas fa-star fa-3x";
+        });
+
+        l5.addEventListener("click", function (e) {
+          let n2 = document.getElementById("ajouter_avis_5_star");
+          n2.checked = true;
+          choice = true;
+          l1.className = "fas fa-star checked fa-3x";
+          l2.className = "fas fa-star checked fa-3x";
+          l3.className = "fas fa-star checked fa-3x";
+          l4.className = "fas fa-star checked fa-3x";
+          this.className = "fas fa-star checked fa-3x";
+        });
+      </script>
+      <!-- Modal -->
+      {% else %}
+      
+      {% if (is_granted('ROLE_FOURNISSEUR') or is_granted('ROLE_ADMIN')) %}
+      <div class="row mt-2">
+        <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+          <button
+            type="button"
+            class="btn btn-primary mt-2 mb-2"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
+          >
+            Voir la liste totale
+          </button>
+        </div>
+      </div>  
+      {% else %}
+      <div class="row mt-2">
+        <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+          <button
+            type="button"
+            class="btn btn-primary mt-2 mb-2"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
+          >
+            Voir la liste totale
+          </button>
+          <a
+            href="{{ path('app_user_avis_service', { 'service': service.id }) }}"
+            class="btn btn-primary text-center"
+            >Exprimer votre avis</a
+          >
+        </div>
+      </div>  
+      {% endif %}
+
+      {% endif %}
+    </div>
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+  </div>
+</div>
+<!--
+  Confirmation de la suppression
+-->
+<div
+  class="modal fade"
+  id="confirmationSupression"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>Voulez-vous vraiment supprimer votre avis ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          Annuler
+        </button>
+        <a
+          href="#"
+          class="btn btn-danger"
+          id="supprimer"
+          >Supprimer</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+<!--
+  Confirmation de la suppression
+-->
+<div
+class="modal fade"
+id="confirmationImage"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="modal"
+    aria-label="Close"
+  ></button>
+</div>
+<div class="modal-body">
+  <p>
+    Voulez-vous vraiment supprimer cette image ?
+  </p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal">
+    Annuler
+  </button>
+  <a href="#" class="btn btn-danger" id="supprimerImage">Supprimer</a>
+</div>
+</div>
+</div>
+</div>
+<div
+class="modal fade"
+id="confirmationVideo"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="modal"
+    aria-label="Close"
+  ></button>
+</div>
+<div class="modal-body">
+  <p>
+    Voulez-vous vraiment supprimer cette vidéo ?
+  </p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal">
+    Annuler
+  </button>
+  <a href="#" class="btn btn-danger" id="supprimerVideo">Supprimer</a>
+</div>
+</div>
+</div>
+</div>
+<div
+class="modal fade"
+id="arretCommande"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">Rappel</h5>
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="modal"
+    aria-label="Close"
+  ></button>
+</div>
+<div class="modal-body">
+  <p>
+    Ce fournisseur n'est pas disponible pour le moment !
+  </p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-bs-toggle="modal">
+    Fermer
+  </button>
+</div>
+</div>
+</div>
+</div>
+<div class="container-fluid">
+  <br><br><br><br><br>
+</div>
+
+<footer>
+  <div class="row">
+   <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+<p style="color:white;"><i class="fa fa-facebook-official w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-twitter w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-instagram w3-hover-opacity" style="color: white;"></i> <br> &copy; 2021 SAHEELHA. Tous les droits sont réservés</p>
+   </div>
+  </div>
+</footer>
+<!--
+Agrandir une image
+-->
+<div
+class="modal fade"
+id="agrandirimg"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog modal-xl">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="titreimg"></h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="modal-body">
+     
+      <img
+              src="#"
+              alt=""
+              class="img-fluid  mx-auto d-block mb-3 image-img"
+              style="width:500px;height:500px;"
+              id="imgaAgrandir"
+            />
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        Fermer
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+<!--
+  Agrandir une image
+-->
+<script>
+  function verifier(link) {
+    // let confirmation = document.getElementById("staticBackdrop");
+    // if (confirmation != null) {
+    //   confirmation.hide();
+    // }
+    let supprimer = document.getElementById("supprimer");
+    supprimer.href = link;
+  }
+  function confirmationImage(link){
+    let supprimer = document.getElementById("supprimerImage");
+    supprimer.href = "" + link;
+  }
+  function confirmationVideo(link){
+    let supprimer = document.getElementById("supprimerVideo");
+    supprimer.href = "" + link;
+  }
+  function zoom(img,nom){
+    let image=document.getElementById('imgaAgrandir');
+    let titre=document.getElementById('titreimg');
+    image.src=img;
+    titre.textContent=nom;
+   
+   
+$(document).ready(function(){
+  $('#agrandirimg').modal('show');
+});
+  }
+</script>
+
+{{ include("@MercurySeriesFlashy/flashy.html.twig") }}
+{% endblock %}

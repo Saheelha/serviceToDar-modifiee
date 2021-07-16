@@ -1,0 +1,150 @@
+{% extends 'base.html.twig' %} {% block title %}Détails catégorie {% endblock %} {%
+  block body %}
+  <style>
+    .titre{
+      color:#30a7ab;
+        font-size: xx-large;
+        text-decoration: none;
+        text-transform: uppercase;
+        text-align: center;
+		font-weight:bold;
+      }
+      .titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+  
+    .sous-titre {
+      color:black;
+        font-size: x-large;
+        text-decoration: none;
+        text-transform: uppercase;
+        text-align: center;
+		font-weight:bold;
+    }
+    .sous-titre span:hover {
+      text-decoration: none;
+        color: blue;
+        width: auto;
+    }
+  
+    .image {
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+      height: 50%;
+    }
+    footer{
+    background-color: #1a2c2d;
+    width: 100%;
+    color: white;
+    height: auto;
+    padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    font-family: calibre;
+    margin-top: 25px;
+  }
+  footer div i{
+    color: white;
+  }
+  footer i:hover{
+        color: grey;
+      }
+    .c {
+      margin-top: 50px;
+    }
+    .left {
+      background-color: white;
+      width: 100%;
+      padding: 25px;
+    }
+    .carte {
+      width: 100%;
+    }
+    .hr {
+      color: white;
+      border-top: 3px dashed black;
+    }
+    .table-t {
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .table-t tr {
+      margin-top: 50px;
+    }
+    .table-t th,
+    td {
+      text-align: center;
+      margin-top: 50px;
+    }
+    .titre-information {
+      color: black;
+      font-size: x-large;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    .information {
+      color: grey;
+      font-size: large;
+    }
+    .role {
+      color: blue;
+    }
+    /* .introduction:hover{
+        text-decoration: underline;
+      } */
+      .profil{
+        margin-top: 25px;
+    /*  background-image: url("{{asset('/bg/bg5.jpg')}}");*/
+    background-color: #30a7ab;
+    width: 100%;
+    height: fit-content;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 50px;
+    padding-top: 80px;
+    opacity: 0.8;
+    margin-bottom: 25px;
+      }
+  </style>
+  <div class="container-fluid"><br /><br /><br /><br /></div>
+  <div class="container-fluid mt-5 c">
+   <div class="row">
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4">
+      <h1 class="h1 titre text-center mb-5"><span>{{categorie.titre}}</span></h1>
+      <img src="{{ asset('/img/categories/'~ categorie.icone) }}" alt="{{categorie.titre}}" class="rounded mx-auto d-block img-fluid mb-3">
+      
+         <p class="mb-3">
+          {{categorie.description}}
+         </p>
+    </div>
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+
+   </div>
+  </div>
+  </div>
+  <div class="container-fluid">
+    <br><br><br><br><br>
+  </div>
+  <footer>
+    <div class="row">
+     <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+  <p style="color:white;"><i class="fa fa-facebook-official w3-hover-opacity" style="color: white;"></i>
+    <i class="fa fa-twitter w3-hover-opacity" style="color: white;"></i>
+    <i class="fa fa-instagram w3-hover-opacity" style="color: white;"></i> <br> &copy; 2021 SAHEELHA. Tous les droits sont réservés</p>
+     </div>
+    </div>
+  </footer>
+  <!--  -->
+  
+  <!--  -->
+  {{ include("@MercurySeriesFlashy/flashy.html.twig") }}
+  <script>
+  
+</script>
+  {% endblock %}
+  

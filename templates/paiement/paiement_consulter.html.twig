@@ -1,0 +1,177 @@
+{% extends 'base.html.twig' %} {% block title %}Renouveler Abonnement{% endblock %}
+{% block body %}
+<style>
+  .titre{
+        color:black;
+        font-size: xx-large;
+        text-decoration: none;
+        text-transform: uppercase;
+        text-align: center;
+		font-weight:bold;
+      }
+      .titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+      .sous-titre{
+        color:teal;
+        font-size: large;
+        font-family: Arial, Helvetica, sans-serif;
+        font-style: italic;
+        text-decoration: underline;
+      }
+      .sous-titre span:hover{
+        background-color: turquoise;
+        color: crimson;
+        width: auto;
+      }
+      footer{
+    background-color: cornflowerblue;
+    color: white;
+    width: 100%;
+    height: 80px;
+    text-align: center;
+    padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    margin-top: 25px;
+  }
+  footer div i{
+    color: white;
+  }
+  footer i:hover{
+        color: grey;
+      }
+  .connexion{
+    text-decoration: none;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .connexion:hover{
+    text-decoration: underline;
+    color: dodgerblue;
+  }
+</style>
+<div class="container-fluid">
+  <br /><br /><br />
+  <br /><br />
+</div>
+<div
+  class="container-fluid my-5 mx-md-5 my-md-5 mx-lg-5 mx-xxl-5 my-lg-3 my-xxl-5"
+>
+  <div class="row mt-5 text-center ">
+    <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+      <h1 class="h1 titre text-center"><span>Renouveler Abonnement</span></h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-3 col-lg-3 col-xxl-4">
+
+    </div>
+    <div class="col-12 col-md-6 col-lg-6 col-xxl-4">
+      <form action="" method="post">
+        <div id="errors" role="alert" class="alert alert-danger" hidden="true">
+          <!-- Continent les messages d'erreurs -->
+          </div>
+         <div class="from-group">
+           <label for="card-holder">Titulaire *</label>
+           <input type="text" name="card-holder" id="card-holder" class="form-control" placeholder="Titulaire de la carte...">
+           <div class="error alert alert-danger" role="alert" hidden="true">
+             Ce champ est obligatoire !
+           </div>
+         </div>
+          <div id="card-elements" class="form-group mt-3">
+          <!-- Contient le formulaire de saisie des informations de la carte -->
+          </div>
+          <div id="card-errors" role="alert" class="alert alert-danger" hidden="true">
+          <!-- Contient les erreurs relatives à la carte -->
+          </div>
+          <div class="form-group mt-2 text-center">
+            <button id="card-button" type="submit" data-secret="{{code}}" class="btn btn-primary" >Payer</button>
+          </div>
+      </form>
+    </div>
+    <div class="col-12 col-md-3 col-lg-3 col-xxl-4"></div>
+  </div>
+</div>
+<footer 
+>
+  <div>
+    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+  <i class="fa fa-instagram w3-hover-opacity"></i>
+  <i class="fa fa-snapchat w3-hover-opacity"></i>
+  <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+  <i class="fa fa-twitter w3-hover-opacity"></i>
+  <i class="fa fa-linkedin w3-hover-opacity"></i>
+  <p class="w3-medium">
+    créée par
+    <a href="https://www.w3schools.com/w3css/default.asp" target="_blank"
+      >Saheelha</a
+    >
+  </p>
+  </div>
+</footer>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  window.onload=function(){
+    let stripe=Stripe('pk_test_51IytgEHx0Pz6HlZShwR6K14vzzPuXIvFNskDNLGLyQMiN5NlZyXQhJssIUWcquErGz9rzUWgsA5xKP6ay9IEA4sx00teNrCF8y');
+    let elements=stripe.elements();
+    let redirect='index.php';
+    // charger les objet de la page
+    let cardHolder=document.getElementById('card-holder');
+    let cardButton=document.getElementById('card-button');
+    let clientSecret=cardButton.dataset.secret;
+    // créer les éléments restant du formulaire
+    let card=elements.create('card');
+    //card.class+='form-control';
+    card.mount('#card-elements');
+    console.log(card);
+    // let cardnumber=document.getElementsByName('cardnumber');
+    let expDate=document.getElementsByName('exp-date');
+    //let cvc=document.getElementsByName('cvc');
+    // cardnumber.className='form-control';
+   // card.className='form-control';
+    // on gére les événemens
+    card.addEventListener('change',function(event){
+        let displayerror=document.getElementById('card-errors');
+       // valider(expDate.value);
+        if(event.error){
+            displayerror.textContent=event.error.message;
+            displayerror.hidden=false;
+           // event.preventDefault();
+        }
+        else{
+            displayerror.textContent='';
+            displayerror.hidden=true;
+        }
+
+    });
+    // on gérer le paiement
+    cardButton.addEventListener('click',function(e){
+      let displayerror=document.getElementById('card-errors');
+      let errors= document.getElementById('errors');
+      this.disabed=true;
+      e.preventDefault();
+        stripe.handleCardPayment(
+            clientSecret,card,{
+                payment_method_data:{
+                    billing_details:{name:cardHolder.value}
+                }
+            }
+        ).then(function(r){
+            if(r.error){
+                errors.textContent=r.error.message;
+                errors.hidden=false;
+                e.preventDefault();
+            }
+            else{
+              errors.hidden=true;
+              console.log('ici');
+              document.location.href="/activer/abonnement/{{app.user.id}}";
+            }
+        });
+    });
+}
+</script>
+{% endblock %}

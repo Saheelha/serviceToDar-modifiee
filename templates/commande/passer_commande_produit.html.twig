@@ -1,0 +1,254 @@
+{% extends "base.html.twig" %}
+{% block title %}Commander un produit{% endblock %}
+{% block body %}
+<style>
+  .titre{
+        color:#30a7ab;
+        font-size: xx-large;
+        text-decoration: none;
+        text-transform: uppercase;
+		font-weight:bold;
+      }
+      .titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+  .sous-titre {
+    color:#30a7ab;
+        font-size: x-large;
+        text-decoration: none;
+        text-transform: uppercase;
+		font-weight:bold;
+  }
+  .sous-titre span:hover {
+    text-decoration: none;
+        color: blue;
+        width: auto;
+  }
+  footer{
+    background-color: #1a2c2d;
+    width: 100%;
+    color: white;
+    height: auto;
+    padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    font-family: calibre;
+    margin-top: 25px;
+  }
+  footer div i{
+    color: white;
+  }
+  footer i:hover{
+        color: grey;
+      }
+</style>
+<div class="container-fluid">
+  <br /><br /><br />
+  <br /><br />
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center mt-5">
+      <h1 class="titre"><span>Commander un produit</span></h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4">
+      {{form_start(form)}}
+      <div class="form-group mb-2">
+        {{
+          form_row(form.qte, {
+            label: "Quantité *",
+            attr: { class: "form-control", placeholder: "Quantité..." }
+          })
+        }}
+        <div class="alert alert-danger mt-2" id="error-qte" role="alert" hidden="true">
+          <p>La quantité disponible pour ce produit est {{qtemax}}</p>
+        </div>
+      </div>
+        <div class="form-group mb-2">
+          {{
+            form_row(form.taxe, {
+              label: "Taxe *",
+              attr: { class: "form-control", placeholder: "Taxe..." }
+            })
+          }}
+        </div>
+        <div class="form-group mb-2">
+          {{
+            form_row(form.gouvernorat, {
+              label: "Gouvernorat *",
+              attr: { class: "form-control" }
+            })
+          }}
+        </div>
+        <div class="form-group mb-2">
+          {{
+            form_row(form.lieuLivraison, {
+              label: "Adresse de livraison *",
+              attr: { class: "form-control", placeholder: "Adresse de livraison" }
+            })
+          }}
+          <div class="alert alert-danger mt-2" id="error-lieu" role="alert" hidden="true">
+            <p>Ce champ est obligatoire !</p>
+          </div>
+        </div>
+        
+        <div class="text-center d-grid gap-2 mt-5 mt-md-5 mt-lg-5 mt-5">
+          <button type="button"  class="btn btn-primary" id="envoyer" data-bs-toggle="modal" data-bs-target="#confirmationDeCommande">
+            <i class="fas fa-shopping-cart"></i> Commander
+          </button>
+        </div>
+        <!--
+  Confirmation de la commande
+-->
+<div
+class="modal fade"
+id="confirmationDeCommande"
+tabindex="-1"
+aria-labelledby="exampleModalLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <p>Voulez-vous vraiment commander ce produit ?</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+        Annuler
+      </button>
+      <button type="submit" class="btn btn-primary">Oui</button>
+    </div>
+  </div>
+</div>
+</div>
+<!--
+Confirmation de la commande
+-->
+      {{form_end(form)}}
+    </div>
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+  </div>
+</div>
+<footer>
+  <div class="row">
+   <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+<p style="color:white;"><i class="fa fa-facebook-official w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-twitter w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-instagram w3-hover-opacity" style="color: white;"></i> <br> &copy; 2021 SAHEELHA. Tous les droits sont réservés</p>
+   </div>
+  </div>
+</footer>
+
+
+<script>
+  var envoyer=document.getElementById('envoyer');
+  var valider=[false,false];
+  var qte=document.getElementById('commande_produit_qte');
+  var lieuLivraison=document.getElementById('commande_produit_lieuLivraison');
+  if(valider[0]==true && valider[1]==true){}
+  else{
+    envoyer.disabled=false;
+  }
+  document.addEventListener('mousemove',function(){
+    if(valider[0]==true && valider[1]==true){
+      envoyer.disabled=false;
+    }
+  else{
+    envoyer.disabled=true;
+  } 
+  });
+  qte.addEventListener('focus',function(e){
+    let res=parseInt('{{qtemax}}');
+    if(this.value<100 && this.value >0 && res>=this.value){
+      let error=document.getElementById('error-qte');
+      error.hidden=true;
+      valider[0]=true;
+    }
+    else{
+      let error=document.getElementById('error-qte');
+      error.hidden=false;
+      valider[0]=false;
+    }
+  });
+  qte.addEventListener('focusout',function(e){
+    let res=parseInt('{{qtemax}}');
+    if(this.value<100 && this.value >0 && res>=this.value){
+      let error=document.getElementById('error-qte');
+      error.hidden=true;
+      valider[0]=true;
+    }
+    else{
+      let error=document.getElementById('error-qte');
+      error.hidden=false;
+      valider[0]=false
+    }
+    //error-
+  });
+  lieuLivraison.addEventListener('focus',function(){
+      if(this.value.length == 0){
+        let error=document.getElementById('error-lieu');
+      error.hidden=false;
+      valider[1]=false;
+      }
+      else{
+        let error=document.getElementById('error-lieu');
+      error.hidden=true;
+      valider[1]=true;
+      }
+    });
+    lieuLivraison.addEventListener('focusout',function(){
+      if(this.value.length == 0){
+        let error=document.getElementById('error-lieu');
+      error.hidden=false;
+      valider[1]=false;
+      }
+      else{
+        let error=document.getElementById('error-lieu');
+      error.hidden=true;
+      valider[1]=true;
+      }
+    });
+    envoyer.addEventListener('click',function(e){
+      if(valider[0]==true && valider[1]==true){
+
+      }
+      else{
+        e.preventDefault();
+      }
+    });
+// function nbrDisponible(nbr){
+//   nbr=parseInt(nbr);
+//   if(qte.value>nbr){
+//     valider[0]=false;
+//     let error=document.getElementById('error-qte');
+//     error.hidden=false;
+//   }
+//   else{
+//     if(qte<0){
+//       let error=document.getElementById('error-qte');
+//     error.hidden=false;
+//     valider[0]=false;
+//     }
+//     else{
+//       let error=document.getElementById('error-qte');
+//     error.hidden=true;
+//     valider[0]=true;
+//     }
+//   }
+// }
+</script>
+{% endblock %}

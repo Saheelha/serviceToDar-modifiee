@@ -1,0 +1,196 @@
+{% extends 'base.html.twig' %} {% block title %}fournisseur favoris de {{user.username}} {%
+    endblock %} {% block body %}
+    <style>
+      footer{
+        background-color: cornflowerblue;
+        color: white;
+        width: 100%;
+        height: 80px;
+        text-align: center;
+        padding-top: 10px;
+        position: fixed;
+        bottom: 0;
+        margin-top: 25px;
+      }
+      footer div i{
+        color: white;
+      }
+      footer i:hover{
+            color: grey;
+          }
+          .titre{
+            color:black;
+            font-size: xx-large;
+            font-family: Arial, Helvetica, sans-serif;
+            font-style: italic;
+            text-decoration: underline;
+            text-transform: uppercase;
+          }
+          .titre span:hover{
+            text-decoration: underline;
+            color: blue;
+            width: auto;
+          }
+      .carte {
+        width: fit-content;
+      }
+      .hr {
+        color: white;
+        border-top: 3px dashed black;
+      }
+      .table-t {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+      }
+      .table-t tr {
+        margin-top: 50px;
+      }
+      .table-t th,
+      td {
+        text-align: center;
+        margin-top: 50px;
+      }
+      .titre-information {
+        color: black;
+        /* font-size: x-large; */
+      }
+      .information {
+        color: dodgerblue;
+        /* font-size: large; */
+      }
+      .role {
+        color: blue;
+      }
+      .card-c {
+        border: none;
+      }
+      .image-img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+      }
+    </style>
+    <div class="container-fluid">
+      <br /><br /><br /><br /><br /><br />
+    </div>
+    <div class="container fluid">
+      <dv class="row">
+        <div class="col-12 col-md-12 col-lg-12 col-xx-12 text-center">
+          <h1 class="titre text-center"><span>les fournisseurs favoris</span></h1>
+        </div>
+      </dv>
+      <div class="row scroll">
+        {% if fournisseurs|length > 0 %} {% for fournisseur in fournisseurs %}
+        <div class="col-12 col-md-12 col-lg-3 col-xxl-3">
+          <div class="card">
+            <div class="card-body">
+              <img
+                src="{{asset('/img/photo_profil_utilisateurs/'~ fournisseur.photo)}}"
+                class="img-fluid img-thumbnail mx-auto d-block image-img"
+                alt="{{ fournisseur.nom }}"
+                style="width: 100px;height: 100px;"
+              />
+              <div class="card-title text-center mt-3">
+                {{ fournisseur.nom }} {{ fournisseur.prenom }}
+              </div>
+              <div class="card-text text-center">
+                <div class="row">
+                  <div class="col-6 col-md-6 col-lg-6 col-xxl-6 text-center">
+                    <a
+                      href="{{
+                        path('app_chercher__favoris', { id: fournisseur.id })
+                      }}"
+                      class="btn btn-info"
+                      >voir détails</a
+                    >
+                  </div>
+                  <div class="col-6 col-md-6 col-lg-6 col-xxl-6 text-center">
+                    {% set link =
+                    path('app_favoris_delete_fournisseur',{'user':fournisseur.id})
+                    %}
+                    <button
+                      class="btn btn-danger"
+                      data-bs-toggle="modal"
+                      data-bs-target="#confirmation"
+                      onclick="confimation('{{ link }}')"
+                    >
+                      Supprimer
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %} {% else %}
+        <div class="row mt-5">
+          <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+          <div class="col-12 col-md-12 col-lg-4 col-xxl-4 text-center">
+            <div class="alert alert-info" role="alert">
+              <p>Ce client n'a pas de fournisseurs favoris pour le moment !</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    <footer 
+    >
+      <div>
+        <i class="fa fa-facebook-official w3-hover-opacity"></i>
+      <i class="fa fa-instagram w3-hover-opacity"></i>
+      <i class="fa fa-snapchat w3-hover-opacity"></i>
+      <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+      <i class="fa fa-twitter w3-hover-opacity"></i>
+      <i class="fa fa-linkedin w3-hover-opacity"></i>
+      <p class="w3-medium">
+        créée par
+        <a href="#"
+          >Saheelha</a
+        >
+      </p>
+      </div>
+    </footer>
+    <div
+      class="modal fade"
+      id="confirmation"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>
+              Voulez-vous vraiment supprimer ce fournisseur de cette liste des
+              favoris ?
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+              Annuler
+            </button>
+            <a href="#" class="btn btn-danger" id="supprimer">Supprimer</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function confimation(link) {
+        let supprimer = document.getElementById("supprimer");
+        supprimer.href = "" + link;
+      }
+    </script>
+    {% endblock %}
+    

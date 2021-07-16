@@ -1,0 +1,65 @@
+{% extends "base.html.twig" %}
+{% block title %}A propos de nous{% endblock %}
+{% block body %}
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-body">
+            {# navBar#}
+            <div class="row">
+                <div class="col-12 bg-dark mb-5">
+                  <<nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark">
+                    <div class="container-fluid">
+                      <a href="#" class="navbar-brand mb-0 h1">LOGO</a>
+                      <button
+                        class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarNav"
+                        aria-controls="navbarNav"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                      >
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                      <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                          <li class="nav-item active">
+                            <a href="{{path('app_accueil')}}" class="nav-link active">Accueil</a>
+                          </li>
+                          <li class="nav-item active">
+                            <a href="{{path('app_categories_metier')}}" class="nav-link active">Catégorie métier</a>
+                          </li>
+                          <li class="nav-item active">
+                            <a href="{{path('app_chercher_fournisseurs')}}" class="nav-link active">chercher un fournisseur</a>
+                          </li>
+                          <li class="nav-item active">
+                            <a href="{{path('app_a_propos_de_nous')}}" class="nav-link active">Â propos de nous</a>
+                          </li>
+                          {% if app.user %}
+                          li class="nav-item ms-5 me-5">
+                            <div class="d-grid gap-2 d-md-block">
+                              <a href="{{path('app_logout')}}" class="nav-link btn btn-secondary"
+                                ><i class="fas fa-user"></i> Se déconnecter</a
+                              >
+                          {% else %}
+                          <li class="nav-item ms-5 me-5">
+                            <div class="d-grid gap-2 d-md-block">
+                              <a href="{{path('app_login')}}" class="nav-link btn btn-secondary"
+                                ><i class="fas fa-user"></i> Se connecter</a
+                              >
+                          {% endif %}
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </nav>
+                </div>
+              </div>
+            {#navBar#}
+            <div class="card-title">A Propos de nous</div>
+            <div class="card-text">Text</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

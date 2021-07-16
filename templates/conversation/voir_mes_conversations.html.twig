@@ -1,0 +1,151 @@
+{% extends "base.html.twig" %}
+{% block title %}Mes conversations{% endblock %}
+{% block body %}
+<style>
+  .titre{
+        color:#30a7ab;
+        font-size: xx-large;
+        text-decoration: none;
+        text-transform: uppercase;
+		font-weight:bold;
+      }
+      .titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+  .sous-titre {
+    color:#30a7ab;
+        font-size: x-large;
+        text-decoration: none;
+        text-transform: uppercase;
+		font-weight:bold;
+  }
+  .sous-titre span:hover {
+    text-decoration: none;
+        color: blue;
+        width: auto;
+  }
+  .commande {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+  }
+ .image{
+     border-radius: 50%;
+     padding: 25px;
+     width: 200px;
+     height: 200px;
+     margin-left: 25px;
+     
+ }
+ 
+ footer{
+    background-color: #1a2c2d;
+    width: 100%;
+    color: white;
+    height: auto;
+    padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    font-family: calibre;
+    margin-top: 25px;
+  }
+  footer div i{
+    color: white;
+  }
+  footer i:hover{
+        color: grey;
+      }
+  .image-img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  .scroll {
+    max-height: 400px;
+    overflow-y: auto;
+}
+.carte-t{
+  /* width: 18rem; */
+  background-color: #30a7ab;
+}
+  
+</style>
+<div class="container-fluid">
+    <br><br><br><br><br><br><br>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+            <h1 class="titre text-center"><span>Mes conversations</span></h1>
+        </div>
+    </div>
+    <div class="row mt-5">
+      
+       {% if conversations|length == 0 %}
+       <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+       <div class="col-12 col-md-12 col-lg-4 col-xxl-4">
+         <div class="alert alert-info" role="alert">
+           <p>Aucune conversation n'est trouvé pour le moment !</p>
+         </div>
+       </div>
+       <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+       {% else %}
+      <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+        <div class="row">
+          {% for conversation in conversations %}
+          {% for user in conversation.utilisateurs %}
+            {# <div class="col-12 col-md-12 col-lg-3 col-xxl-3">
+              <div class="card carte-t" >
+                <div class="card-body">
+                  <h5 class="card-title text-center" style="color: white;">{{user.nom}} {{user.prenom}}</h5>
+                  
+                  <img src="{{asset('/img/photo_profil_utilisateurs/'~ user.photo)}}" class=" mx-auto d-block" alt="..." style="border-radius: 50%;border:4px solid white;">
+                  <div class="row mt-2">
+                    <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+                      <a href="{{path('app_consulter_conversation',{'otherUser':user.id})}}" class="btn btn-primary"><i class="far fa-comment-dots"></i></a>
+                    </div>
+                   
+                  </div>
+              </div>
+            </div>
+            </div> #}
+            {% if user.id != app.user.id %}
+            <div class="col-12 col-md-12 col-lg-3 col-xxl-3 mb-3">
+              <div class="card carte-t" >
+                <div class="card-body">
+                  <h5 class="card-title text-center" style="color: white;">{{user.nom}} {{user.prenom}}</h5>
+                  
+                  <img src="{{asset('/img/photo_profil_utilisateurs/'~ user.photo)}}" class=" mx-auto d-block" alt="..." style="border-radius: 50%;border:4px solid white;" width="150" height="150">
+                  <div class="row mt-2">
+                    <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+                      <a href="{{path('app_consulter_conversation',{'otherUser':user.id})}}" class="btn btn-primary">Voir détails</a>
+                    </div>
+                   
+                  </div>
+              </div>
+            </div>
+            </div> 
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+        </div>
+      </div>
+       {% endif %} 
+    </div>
+    
+</div>
+<div class="container-fluid">
+  <br><br><br><br>
+</div>
+<footer>
+  <div class="row">
+   <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+<p style="color:white;"><i class="fa fa-facebook-official w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-twitter w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-instagram w3-hover-opacity" style="color: white;"></i> <br> &copy; 2021 SAHEELHA. Tous les droits sont réservés</p>
+   </div>
+  </div>
+</footer>
+{% endblock %}

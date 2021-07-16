@@ -1,0 +1,137 @@
+{% extends "base.html.twig" %} {% block title %}Liste des utilisateurs{%
+endblock %} {% block body %}
+<style>
+  .titre{
+        color:#30a7ab;
+        font-size: xx-large;
+        text-decoration: none;
+        text-transform: uppercase;
+		font-weight:bold;
+      }
+      .titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+      .image{
+        width: 100px;
+        height: 100px;
+      }
+      .sous-titre{
+        color:#30a7ab;
+        font-size: x-large;
+        text-decoration: none;
+        text-transform: uppercase;
+        text-align: center;
+		font-weight:bold;
+      }
+      .sous-titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+      footer{
+    background-color: #1a2c2d;
+    width: 100%;
+    color: white;
+    height: auto;
+    padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    font-family: calibre;
+    margin-top: 25px;
+  }
+  footer div i{
+    color: white;
+  }
+  footer i:hover{
+        color: grey;
+      }
+  .connexion {
+    text-decoration: none;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .connexion:hover {
+    text-decoration: underline;
+    color: dodgerblue;
+  }
+</style>
+<div class="Container-fluid"><br /><br /><br /><br /><br /><br /></div>
+<div
+  class="container-fluid my-5 mx-md-5 my-md-5 mx-lg-5 mx-xxl-5 my-lg-3 my-xxl-5"
+>
+  <div class="row mt-5 text-center mx-lg-3 mx-xxl-5 my-lg-5 my-xxl-5">
+    <div class="col-12">
+      <h1 class="h1 titre"><span>Choisissez le  type d'utilisateur que vous voulez consulter</span></h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-3 col-lg-3 col-xxl-4"></div>
+    <div class="col-12 col-md-6 col-lg-6 col-xxl-4 text-center">
+      <div class="row text-center mt-5">
+        <div class="col-12 col-md-6 col-lg-6 col-xxl-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title sous-titre">
+                <span>Client</span>
+              </div>
+              <img
+                src="{{ asset('/img/client.jpg') }}"
+                alt="image client"
+                width="100"
+                height="100"
+                class="img-thumbnail image"
+              />
+              <div class="Card-text mt-2">
+               
+                <a
+                  href="{{ path('app_controller_clients') }}"
+                  class="btn w3-light-blue"
+                  >Voir détails</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6 col-xxl-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title sous-titre">
+                <span>Fournisseur</span>
+              </div>
+              <img
+                src="{{ asset('/img/fournisseur.png') }}"
+                alt="image fournisseur"
+                width="100"
+                height="100"
+                class="img-thumbnail image"
+              />
+              <div class="Card-text mt-2">
+                
+                <a
+                  href="{{ path('app_controller_fournisseurs') }}"
+                  class="btn w3-light-grey"
+                  >Voir détails</a
+                >
+              </div>
+            </div>
+          </div>
+          <h4></h4>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-3 col-lg-3 col-xxl-4"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="row">
+   <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+<p style="color:white;"><i class="fa fa-facebook-official w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-twitter w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-instagram w3-hover-opacity" style="color: white;"></i> <br> &copy; 2021 SAHEELHA. Tous les droits sont réservés</p>
+   </div>
+  </div>
+</footer>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<div class="container-fluid">
+    <br><br><br><br><br><br><br><br><br><br><br>
+</div>
+<div class="contaiener-fluid">
+    <h1>Ajouter une sous catégorie</h1>
+    {{form_start(form)}}
+    {{
+        form_row(form.titre, {
+          label: "Titre *",
+          attr: {  placeholder: "Titre..." }
+        })
+      }}
+      {{
+        form_row(form.description, {
+          label: "Description *",
+          attr: {  placeholder: "Description..." }
+        })
+      }}
+      
+      <button type="submit">modifier</button>
+    {{form_end(form)}}
+</div>
+<div class="container-fluid">
+    <br><br><br><br><br><br><br><br><br><br><br>
+</div>
+{% endblock %}

@@ -1,0 +1,187 @@
+{% extends "base.html.twig" %}
+{% block title %}
+Mes commandes
+{% endblock %}
+{% block body %}
+<style>
+  .titre{
+        color:#30a7ab;
+        font-size: xx-large;
+        text-decoration: none;
+        text-transform: uppercase;
+		font-weight:bold;
+      }
+      .titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+  .sous-titre {
+    color:#30a7ab;
+        font-size: x-large;
+        text-decoration: none;
+        text-transform: uppercase;
+		font-weight:bold;
+  }
+  .sous-titre span:hover {
+    text-decoration: none;
+        color: blue;
+        width: auto;
+  }
+  .commande {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+  }
+  .left {
+    float: left;
+  }
+  .right {
+    float: right;
+  }
+  .center {
+    text-align: center;
+  }
+  footer{
+    background-color: #1a2c2d;
+    width: 100%;
+    color: white;
+    height: auto;
+    padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    font-family: calibre;
+    margin-top: 25px;
+  }
+  footer div i{
+    color: white;
+  }
+  footer i:hover{
+        color: grey;
+      }
+      .scroll {
+    max-height: 400px;
+    overflow-y: auto;
+}
+mark{
+  background-color:rgb(17, 179, 17);
+  text-decoration: underline;
+}
+</style>
+<div class="container-fluid">
+  <br /><br /><br />
+  <br /><br />
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center mt-5">
+      <h1 class="titre"><span>Mes commandes</span></h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center mt-5 mb-5">
+      <h3 class="sous-titre">
+        <span>Ordonnées de la plus récente vers la plus ancienne</span>
+      </h3>
+    </div>
+  </div>
+  <div class="row">
+    {% if commandes|length > 0 %}
+    <div class="row">
+      <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+        <div class="card scroll" >
+          <div class="card-body">
+            
+            {% set i = commandes|length %}
+    <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+      {% for commande in commandes %} {% if commande.commandeProduit|length > 0
+      %} {% for produit in commande.commandeProduit %}
+      <div class="card" style="border: none;">
+        <div class="card-body">
+          <div class="card-text">
+            <div class="row text-center">
+              <div class="col-12 col-md-12 col-lg-4 col-xxl-4 mt-3 mb-3">
+                <span class=""><strong>Commande numéro : {{ i }}</strong> </span>
+              </div>
+              <div class="col-12 col-md-12 col-lg-4 col-xxl-4 mt-3 mb-3">
+                <span class=""
+                  ><mark>Créée le {{commande.createdAt|date('d/m/y h:m:s')}}</mark></span
+                >
+              </div>
+              <div class="col-12 col-md-12 col-lg-4 col-xxl-4 mt-3 mb-3">
+                <span class="">
+                  <a
+                    href="{{
+                      path('app_generate_facture', { commande: commande.id })
+                    }}"
+                    class="btn btn-primary"
+                    >Facture</a
+                  ></span
+                >
+              </div>
+            </div>
+            <p class="commande"></p>
+          </div>
+        </div>
+      </div>
+      {% endfor %} {% else %} {% for service in commande.serviceCommande %}
+      <div class="card " style="border: none;">
+        <div class="card-body">
+          <div class="card-text">
+            <div class="row text-center">
+              <div class="col-12 col-md-12 col-lg-4 col-xxl-4 mt-3 mb-3">
+                <span class=""><strong>Commande numéro</strong> : {{ i }}</span>
+              </div>
+              <div class="col-12 col-md-12 col-lg-4 col-xxl-4 mt-3 mb-3">
+                <span class=""
+                  ><mark>Créée le {{commande.createdAt|date('d/m/y h:m:s')}}</mark></span
+                >
+              </div>
+              <div class="col-12 col-md-12 col-lg-4 col-xxl-4 mt-3 mb-3">
+                <span class="">
+                  <a
+                    href="{{
+                      path('app_genrer_facture_service', {
+                        commande: commande.id
+                      })
+                    }}"
+                    class="btn btn-primary"
+                    >Facture</a
+                  ></span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %} {% endif %} {% set i = i - 1 %} {% endfor %}
+           
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    {% else %}
+      <div class="col-12 col-md-12 col-lg-4 col-xxl-4 text-center"></div>
+      <div class="col-12 col-md-12 col-lg-4 col-xxl-4 text-center">
+        <div class="alert alert-info" role="alert">
+          <p>Vous n'avez aucunne commande pour l'instant !</p>
+        </div>
+      </div>
+      <div class="col-12 col-md-12 col-lg-4 col-xxl-4 text-center"></div>
+    {% endif %}
+  </div>
+</div>
+<div class="container-fluid">
+  <br><br><br><br><br>
+</div>
+<footer>
+  <div class="row">
+   <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+<p style="color:white;"><i class="fa fa-facebook-official w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-twitter w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-instagram w3-hover-opacity" style="color: white;"></i> <br> &copy; 2021 SAHEELHA. Tous les droits sont réservés</p>
+   </div>
+  </div>
+</footer>
+{% endblock %}

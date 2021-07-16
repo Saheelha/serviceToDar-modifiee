@@ -1,0 +1,224 @@
+{% extends 'base.html.twig' %} {% block title %}Liste de fournisseur favoris{%
+endblock %} {% block body %}
+<style>
+  footer{
+    background-color: #1a2c2d;
+    width: 100%;
+    color: white;
+    height: auto;
+    padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    font-family: calibre;
+    margin-top: 25px;
+  }
+  footer div i{
+    color: white;
+  }
+  footer i:hover{
+        color: grey;
+      }
+      .titre{
+        color:#30a7ab;
+        font-size: xx-large;
+        text-decoration: none;
+        text-transform: uppercase;
+		font-weight:bold;
+      }
+      .titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+  .carte {
+    width: fit-content;
+  }
+  .hr {
+    color: white;
+    border-top: 3px dashed black;
+  }
+  .table-t {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .table-t tr {
+    margin-top: 50px;
+  }
+  .table-t th,
+  td {
+    text-align: center;
+    margin-top: 50px;
+  }
+  .titre-information {
+    color: black;
+    /* font-size: x-large; */
+  }
+  .information {
+    color: dodgerblue;
+    /* font-size: large; */
+  }
+  .role {
+    color: blue;
+  }
+  .card-c {
+    border: none;
+  }
+  .image-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+  }
+  .flip-card {
+  background-color: transparent;
+  width: 300px;
+  height: 200px;
+  border: 1px solid #f1f1f1;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+  background-color: #bbb;
+  color: black;
+}
+
+/* Style the back side */
+.flip-card-back {
+ 
+  color: white;
+  transform: rotateY(180deg);
+}
+.carte-t{
+  /* width: 18rem; */
+  background-color: #30a7ab;
+}
+</style>
+<div class="container-fluid">
+  <br /><br /><br /><br /><br /><br />
+</div>
+<div class="container fluid">
+  <div class="row">
+    <div class="col-12 col-md-12 col-lg-12 col-xx-12 text-center">
+      <h1 class="titre text-center"><span>Mes fournisseurs favoris</span></h1>
+    </div>
+  </div>
+  <div class="row scroll">
+    {% if fournisseurs|length > 0 %} {% for fournisseur in fournisseurs %}
+    <div class="col-12 col-md-12 col-lg-3 col-xxl-3 mb-3" >
+      <!-- ----------- -->
+      <div class="card carte-t" >
+        <div class="card-body">
+          <h5 class="card-title text-center" style="color: white;">{{fournisseur.nom}} {{fournisseur.prenom}}</h5>
+          
+          <img src="{{asset('/img/photo_profil_utilisateurs/'~ fournisseur.photo)}}" class=" mx-auto d-block" alt="..." style="border-radius: 50%;border:4px solid white;width:100px;height:100px;">
+          <div class="row mt-2">
+            <div class="col-6 col-md-6 col-lg-6 col-xxl-6 text-center">
+              <a href="{{ path('app_consulter_fournisseur', { user: fournisseur.id }) }}" class="btn btn-primary">Voir détails</a>
+            </div>
+            <div class="col-6 col-md-6 col-lg-6 col-xxl-6 text-center">
+              {% set link = path('app_favoris_delete_fournisseur',{user:fournisseur.id,choix:1}) %}
+                  <button
+                        type="button"
+                        class="btn bg-danger "
+                        data-bs-toggle="modal"
+                        data-bs-target="#confirmation"
+                        onclick="confimation('{{ link }}')"
+                      >
+                      <i class="fa fa-trash" aria-hidden="true" style="color: white;"></i>
+                      </button>
+            </div>
+          </div>
+      </div>
+        <!-- ------- -->
+      </div>
+    </div>
+    {% endfor %} {% else %}
+    <div class="row mt-5">
+      <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+      <div class="col-12 col-md-12 col-lg-4 col-xxl-4 text-center">
+        <div class="alert alert-info" role="alert">
+          <p>Vous n'avez pas de fournisseurs favoris pour le moment !</p>
+        </div>
+      </div>
+      <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+<div class="container-fluid">
+  <br><br><br><br><br>
+</div>
+<footer>
+  <div class="row">
+   <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+<p style="color:white;"><i class="fa fa-facebook-official w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-twitter w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-instagram w3-hover-opacity" style="color: white;"></i> <br> &copy; 2021 SAHEELHA. Tous les droits sont réservés</p>
+   </div>
+  </div>
+</footer>
+<div
+  class="modal fade"
+  id="confirmation"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Voulez-vous vraiment supprimer ce fournisseur de votre liste des
+          favoris ?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          Annuler
+        </button>
+        <a href="#" class="btn btn-danger" id="supprimer">Supprimer</a>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function confimation(link) {
+    let supprimer = document.getElementById("supprimer");
+    supprimer.href = "" + link;
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,253 @@
+{% extends "base.html.twig" %}
+{% block title %}conversation{% endblock %}
+{% block body %}
+<style>
+  body{
+    background:#eee;    
+}
+.chat-list {
+    padding: 0;
+    font-size: .8rem;
+}
+
+.chat-list li {
+    margin-bottom: 10px;
+    overflow: auto;
+    color: #ffffff;
+}
+
+.chat-list .chat-img {
+    float: left;
+    width: 48px;
+}
+
+.chat-list .chat-img img {
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    width: 100%;
+}
+
+.chat-list .chat-message {
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    background: #5a99ee;
+    display: inline-block;
+    padding: 10px 20px;
+    position: relative;
+}
+
+.chat-list .chat-message:before {
+    content: "";
+    position: absolute;
+    top: 15px;
+    width: 0;
+    height: 0;
+}
+
+.chat-list .chat-message h5 {
+    margin: 0 0 5px 0;
+    font-weight: 600;
+    line-height: 100%;
+    font-size: .9rem;
+}
+
+.chat-list .chat-message p {
+    line-height: 18px;
+    margin: 0;
+    padding: 0;
+}
+
+.chat-list .chat-body {
+    margin-left: 20px;
+    float: left;
+    width: 70%;
+}
+
+.chat-list .in .chat-message:before {
+    left: -12px;
+    border-bottom: 20px solid transparent;
+    border-right: 20px solid #5a99ee;
+}
+
+.chat-list .out .chat-img {
+    float: right;
+}
+
+.chat-list .out .chat-body {
+    float: right;
+    margin-right: 20px;
+    text-align: right;
+}
+
+.chat-list .out .chat-message {
+    background: #fc6d4c;
+}
+
+.chat-list .out .chat-message:before {
+    right: -12px;
+    border-bottom: 20px solid transparent;
+    border-left: 20px solid #fc6d4c;
+}
+
+.card .card-header:first-child {
+    -webkit-border-radius: 0.3rem 0.3rem 0 0;
+    -moz-border-radius: 0.3rem 0.3rem 0 0;
+    border-radius: 0.3rem 0.3rem 0 0;
+}
+.card .card-header {
+    background: #17202b;
+    border: 0;
+    font-size: 1rem;
+    padding: .65rem 1rem;
+    position: relative;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.content{
+    margin-top:40px;    
+}
+footer{
+    background-color: #1a2c2d;
+    width: 100%;
+    color: white;
+    height: auto;
+    padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    font-family: calibre;
+    margin-top: 25px;
+  }
+  footer div i{
+    color: white;
+  }
+  footer i:hover{
+        color: grey;
+      }
+
+      .titre{
+        color:#30a7ab;
+        font-size: xx-large;
+        text-decoration: none;
+        text-transform: uppercase;
+		font-weight:bold;
+      }
+      .titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+
+  .img{
+    width: 90px;
+    border-radius: 50%;
+  }
+.button{
+  border: none;
+  width: 100%;
+}
+.scroll {
+    max-height: 300px;
+    overflow-y: auto;
+}
+.span{
+    text-decoration: underline;
+    cursor: pointer;
+}
+</style>
+<div class="container-fluid">
+    <br><br><br><br>
+</div>
+<div class="container content">
+  <div class="row">
+      <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+        <div class="card">
+          <div class="card-title"><h1 class="titre text-center"><span>Tchat</span></h1></div>
+          <div class="card-body">
+            {% if messages|length > 0 %}
+            <ul class="chat-list scroll">
+                {% for message in messages %}
+                {% set link = path('app_admin_supprimer_message',{'message':message.id}) %}
+                  {% if message.utilisateur.id == mainUser.id %}
+                  <li class="out">
+                    <div class="chat-img">
+                        <img alt="Avtar" src="{{asset('/img/photo_profil_utilisateurs/'~message.utilisateur.photo)}}" class="img">
+                        <h5 style="color: black;font-size:x-small;">{{message.sendAt|date('d/m/y h:m:s')}}</h5>
+                    </div>
+                    <div class="chat-body">
+                        <div class="chat-message">
+                            <h5>{{message.utilisateur.nom}} {{message.utilisateur.prenom}}</h5>
+                            <p>{{message.contenu}}</p>
+                            <span  class=" span mt-3" data-bs-toggle="modal" data-bs-target="#m" onclick="choix('{{link}}')">Supprimer</span>
+                            
+                        </div>
+                    </div>
+                </li>
+                  {% else %}
+                  <li class="in">
+                    <div class="chat-img">
+                      <img alt="Avtar" src="{{asset('/img/photo_profil_utilisateurs/'~message.utilisateur.photo)}}" class="img">
+                      <h5 style="color: black;font-size:x-small;">{{message.sendAt|date('d/m/y h:m:s')}}</h5>
+                  </div>
+                  <div class="chat-body">
+                      <div class="chat-message">
+                          <h5>{{message.utilisateur.nom}} {{message.utilisateur.prenom}}</h5>
+                          <p>{{message.contenu}}</p>
+                          <span  class=" span mt-3" data-bs-toggle="modal" data-bs-target="#m" onclick="choix('{{link}}')">Supprimer</span>
+                          
+                      </div>
+                  </div>
+                </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            {% else %}
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+                        Aucun message n'est envoyé pour l'instant
+                    </div>
+                </div>
+            {% endif %}
+            
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+<footer>
+  <div class="row">
+   <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+<p style="color:white;"><i class="fa fa-facebook-official w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-twitter w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-instagram w3-hover-opacity" style="color: white;"></i> <br> &copy; 2021 SAHEELHA. Tous les droits sont réservés</p>
+   </div>
+  </div>
+</footer>
+  <div class="modal fade" id="m" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Êtes-vous sur de vouloir supprimer ce message ?</p>
+        </div>
+        <div class="modal-footer">
+          
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" style="right:5px;">Non</button>
+          <a href="#" class="btn btn-danger" style="left: 5px;" id="action">Oui</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function choix(i){
+  let a=document.getElementById('action');
+  a.href=i;
+}
+ 
+  </script>
+{% endblock %}

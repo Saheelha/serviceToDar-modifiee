@@ -1,0 +1,357 @@
+{% extends "base.html.twig" %} {% block title %}Recherche{% endblock %}
+{% block body %}
+
+<style>
+  footer{
+    background-color: #2e2f44;
+    width: 100%;
+    color: white;
+    height: auto;
+    padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    font-family: calibre;
+    margin-top: 25px;
+  }
+  footer div i{
+    color: white;
+  }
+  footer i:hover{
+        color: grey;
+      }
+      .titre{
+        color:white;
+        font-size: xx-large;
+        text-decoration: none;
+        text-transform: uppercase;
+        text-align: center;
+		font-weight:bold;
+      }
+      .titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+  .titre-res {
+    color: teal;
+    font-size: large;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: italic;
+    text-decoration: underline;
+    margin-top: 50px;
+  }
+  .titre-res span:hover {
+    background-color: turquoise;
+    color: crimson;
+    width: auto;
+  }
+  
+  .sous-titre {
+    color: black;
+    font-size: x-large;
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  .sous-titre span {
+    color: black;
+    font-style: italic;
+    text-decoration: none;
+  }
+  .l {
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    color: black;
+  }
+  .l:hover {
+    text-decoration: underline;
+    color: navy;
+    font-style: italic;
+  }
+  .categorie-titre {
+    font-size: large;
+    font-family: Arial, Helvetica, sans-serif;
+    color: cornflowerblue;
+  }
+  .categorie-titre span:hover {
+    text-decoration: dashed;
+    color: crimson;
+    background-color: yellowgreen;
+  }
+  .description {
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+    padding: 25px;
+    border: 1px dashed white;
+    background-color: whitesmoke;
+    margin-top: 25px;
+  }
+  .description:hover {
+    text-decoration: underline;
+    color: chocolate;
+    background-color: #ffff99;
+  }
+
+  #staticBackdrop {
+    width: 100%;
+    height: 100%;
+  }
+  .image {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    height: 50%;
+  }
+  .temoniage {
+    background-color: white;
+  }
+  .carte {
+    color: white;
+    background-color: #5f9ea0;
+    margin-bottom: 25px;
+    margin-top: 25px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    padding: 25px;
+  }
+
+  .fleche:hover {
+    color: gold;
+  }
+  i {
+    color: black;
+  }
+  hr {
+    text-align: center;
+  }
+  .recherche {
+    margin-top: 25px;
+    /*  background-image: url("{{asset('/bg/bg5.jpg')}}");*/
+    background-color: #30a7ab;
+    width: 100%;
+    height: fit-content;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 50px;
+    padding-top: 80px;
+    opacity: 0.8;
+    margin-bottom: 25px;
+  }
+  .form {
+    color: black;
+    margin-top: 10px;
+  }
+  .resultat {
+    margin-bottom: 50px;
+  }
+  .profil-fournisseur {
+    width: 100%;
+    height: 100%;
+    margin: 50px;
+  }
+  .profil {
+    width: 300px;
+    height: auto;
+  }
+  .afficher-res {
+    padding: 25px;
+    border: 3px solid dodgerblue;
+    border-radius: 50%;
+    transition: transform 0.2s;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .afficher-res img {
+    width: 200px;
+    height: 200px;
+    margin-left: 40px;
+    border-radius: 50%;
+  }
+  .afficher-res:hover {
+    transform: scale(1.2);
+    background-color: dodgerblue;
+  }
+  .alert-alert{
+    width: fit-content;
+  }
+  .image-img{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+  }
+  .sous-sous-titre{
+    font-size: large;
+    font-weight: bold;
+  }
+  label{
+    color: white;
+    font-size: large;
+  }
+  .btn-search{
+    background-color: white;
+    text-align: center;
+    color: #30a7ab;
+    font-weight: bold;
+    font-size: large;
+  }
+  .carte-t{
+  /* width: 18rem; */
+  background-color: #2c334e;
+  /* width: 70%; */
+}
+</style>
+<div class="container-fluid mt-5"><br /><br /><br /></div>
+<div class="container">
+ 
+</div>
+<div class="container recherche">
+  <div class="row">
+    <col-12 class="col-md-12 col-lg-12 col-xxl-12">
+    <h1 class="h1 text-center titre"><span>Chercher un fournisseur</span></h1>
+      <h1 class="h1 sous-titre text-center">
+        Vous avez besoin d'artisan ?
+      </h1>
+    </col-12>
+    <col-12 class="col-md-12 col-lg-12 col-xxl-12">
+      <p class="sous-sous-titre  text-center">
+        <span>Service To dar </span> vous met en relation avec des
+        <span>artisans de toute la tunisie</span>
+      </p>
+    </col-12>
+    <col-12 class="col-md-12 col-lg-12 col-xxl-12">
+      <div class="row form">
+        <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+        <div class="col-12 col-md-12 col-lg-4 col-xxl-4">
+          {{ form_start(form) }}
+          <div
+            class="
+              form-group
+              mx-0 mx-md-2 mx-lg-2 mx-xxl-2
+              my-0 my-md-2 my-lg-2 my-xxl-2
+            "
+          >
+            {{
+              form_row(form.gouvernorat, {
+                label: "Gouvernorat *",
+                attr: {
+                  class: "form-control"
+                }
+              })
+            }}
+          </div>
+          <div
+            class="
+              form-group
+              mx-0 mx-md-2 mx-lg-2 mx-xxl-2
+              my-0 my-md-2 my-lg-2 my-xxl-2
+            "
+          >
+            {{
+              form_row(form.categorieMetier, {
+                label: "Catégories métier *",
+                attr: {
+                  class: "form-control"
+                }
+              })
+            }}
+            <div
+              id="errorCategorie"
+              class="alert alert-danger mt-3 text-center"
+              role="alert"
+              hidden="true"
+            >
+              Vous devez choisir une catégorie !
+            </div>
+          </div>
+          <div class="form-group text-center mt-3 mt-md-3 mt-lg-3 mt-xxl-3">
+            <button type="submit" class="btn btn-search" id="envoyer">
+              Chercher
+            </button>
+          </div>
+          {{ form_end(form) }}
+        </div>
+        <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+      </div>
+    </col-12>
+  </div>
+</div>
+<div class="container-fluid">
+  {% if recherche == false %}
+  {% else %}
+    {% if foundedUsers|length > 0 %}
+    <div class="row">
+      {% for user in foundedUsers %}
+        {# <div class="col-12 col-md-12 col-lg-3 col-xxl-3">
+          <div class="card">
+            <div class="card-body">
+              <img
+            src="{{asset('/img/photo_profil_utilisateurs/'~user.photo)}}"
+            class="img-fluid img-thumbnail mx-auto d-block image-img"
+            alt="{{ user.username }}"
+        />
+        <div class="card-title text-center mt-3">{{user.nom}} {{user.prenom}}</div>
+        <div class="card-text text-center">
+          <a href="{{ path('app_consulter_fournisseur', { user: user.id }) }}" class="btn btn-info">Voir details</a>
+        </div>
+            </div>
+          </div>
+        </div> #}
+        <div class="col-12 col-md-12 col-lg-3 col-xxl-3 mb-3" >
+          <!-- ----------- -->
+          <div class="card carte-t" >
+            <div class="card-body">
+              <h5 class="card-title text-center" style="color: white;">{{user.nom}} {{user.prenom}}</h5>
+              
+              <img src="{{asset('/img/photo_profil_utilisateurs/'~ user.photo)}}" class=" mx-auto d-block" alt="..." style="border-radius: 50%;border:4px solid white;" width="100" height="100">
+              <div class="row mt-2">
+                <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+                  <a href="{{ path('app_consulter_fournisseur', { user: user.id }) }}" class="btn btn-primary">Voir détails</a>
+                </div>
+                
+              </div>
+          </div>
+            <!-- ------- -->
+            </div>
+          </div>
+      {% endfor %}
+    
+    {% else %}
+    <div role="alert" class="alert alert-danger text-center alert-alert mx-auto">
+      <p class="text-center">
+        Aucun fournisseur ne correspond à vos critères !
+      </p>
+    </div>
+    </div> 
+    {% endif %}
+  {% endif %}
+</div>
+<div class="container-fluid">
+  <br><br><br><br><br>
+</div>
+<footer>
+  <div class="row">
+   <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+<p style="color:white;"><i class="fa fa-facebook-official w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-twitter w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-instagram w3-hover-opacity" style="color: white;"></i> <br> &copy; 2021 SAHEELHA. Tous les droits sont réservés</p>
+   </div>
+  </div>
+</footer>
+<script>
+  var envoyer = document.getElementById("envoyer");
+  envoyer.addEventListener("click", function (e) {
+    let categorie = document.getElementById(
+      "recherche_fournisseurs_categorieMetier"
+    );
+    if (categorie.value.length < 1) {
+      let erreur = document.getElementById("errorCategorie");
+      erreur.hidden = false;
+      e.preventDefault();
+    } else {
+      let erreur = document.getElementById("errorCategorie");
+      erreur.hidden = true;
+    }
+  });
+</script>
+{% endblock %}

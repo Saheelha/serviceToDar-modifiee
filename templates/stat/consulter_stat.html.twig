@@ -1,0 +1,501 @@
+{% extends 'base.html.twig' %} {% block title %}Générer statistiques{% endblock %}
+{% block body %}
+<style>
+  .titre{
+        color:#30a7ab;
+        font-size: xx-large;
+        text-decoration: none;
+        text-transform: uppercase;
+		font-weight:bold;
+      }
+      .titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+      .sous-titre{
+        color:#30a7ab;
+        font-size: x-large;
+        text-decoration: none;
+        text-transform: uppercase;
+        text-align: center;
+		font-weight:bold;
+      }
+      .sous-titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+      footer{
+    background-color: #1a2c2d;
+    width: 100%;
+    color: white;
+    height: auto;
+    padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    font-family: calibre;
+    margin-top: 25px;
+  }
+  footer div i{
+    color: white;
+  }
+  footer i:hover{
+        color: grey;
+      }
+
+    .imgs-prod{
+      width: 100px;
+      height: 100px;
+    }
+    .carte{
+      /* width: fit-content; */
+    }
+    .chart{
+      width: inherit;
+      height: inherit;
+    }
+   
+</style>
+<div class="container-fluid">
+  <br /><br /><br />
+  <br /><br />
+</div>
+<div class="container-fluid mt-5">
+  <div class="row">
+    <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+      <h1 class="titre text-center"><span>Générer statistiques</span></h1>
+    </div>
+  </div>
+  <div class="row">
+    <!-- Carte de statistiques -->
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4 mt-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title text-center"><h1 class="sous-titre text-center"><span>Nombre D'utilisateur</span></h1></div>
+          <div class="card-text text-center mt-5">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#d1" onclick="nbrUtilisateur('{{nbrClient}}','{{nbrFournisseur}}')">Générer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+<div class="modal fade" id="d1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nombre d'utilisateurs</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <canvas id="stat1"  class="chart"></canvas>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <!-- Modal -->
+    <!-- Carte de statistiques -->
+    <!-- Carte de statistiques -->
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4 mt-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title text-center"><h1 class="sous-titre text-center"><span>Nombre De produits et de services</span></h1></div>
+          <div class="card-text text-center mt-5">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#d2" onclick="nbrProduitsEtServices('{{nbrProduits}}','{{nbrServices}}')">Générer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+<div class="modal fade" id="d2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nombre De produits et de services</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <canvas id="stat2"  class="chart"></canvas>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+     <!-- Carte de statistiques -->
+     <div class="col-12 col-md-12 col-lg-4 col-xxl-4 mt-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title text-center"><h1 class="sous-titre text-center"><span>Nombre de commandes de chaque produits</span></h1></div>
+          <div class="card-text text-center mt-5">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#d3" onclick="produitNbrCommandes('{{produits}}','{{nomProduits}}')">Générer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+<div class="modal fade " id="d3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nombre de commandes de chaque produits</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <canvas id="stat3"  class="chart"></canvas>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+     <!-- Carte de statistiques -->
+     <div class="col-12 col-md-12 col-lg-4 col-xxl-4 mt-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title text-center"><h1 class="sous-titre text-center"><span>Nombre de commandes de chaque services</span></h1></div>
+          <div class="card-text text-center mt-5">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#d4" onclick="serviceNbrCommandes('{{services}}','{{nomServices}}')">Générer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+<div class="modal fade " id="d4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nombre de commandes de chaque services</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <canvas id="stat4"  class="chart"></canvas>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+     <!-- Carte de statistiques -->
+     <div class="col-12 col-md-12 col-lg-4 col-xxl-4 mt-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title text-center"><h1 class="sous-titre text-center"><span>Les 3 produits les plus commandés</span></h1></div>
+          <div class="card-text text-center mt-5">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#d5" onclick="produitPlusCommande('{{produitPlusCommandeNoms}}','{{produitPlusCommandeValeurs}}')">Générer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+<div class="modal fade " id="d5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Les 3 produits les plus commandés</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <canvas id="stat5"  class="chart"></canvas>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+    <!-- Carte de statistiques -->
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4 mt-3">
+     <div class="card">
+       <div class="card-body">
+         <div class="card-title text-center"><h1 class="sous-titre text-center"><span>Les 3 services les plus commandés</span></h1></div>
+         <div class="card-text text-center mt-5">
+           <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#d6" onclick="servicesPlusCommande('{{servicePlusCommandeNoms}}','{{servicePlusCommandeValeurs}}')">Générer</button>
+         </div>
+       </div>
+     </div>
+   </div>
+   <!-- Modal -->
+<div class="modal fade " id="d6" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal-dialog">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h5 class="modal-title" id="exampleModalLabel">Les 3 services les plus commandés</h5>
+       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+     </div>
+     <div class="modal-body">
+      <canvas id="stat6"  class="chart"></canvas>
+     </div>
+     <div class="modal-footer">
+       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+     </div>
+   </div>
+ </div>
+</div>
+<!-- Modal -->
+   
+    <!--
+    <div class="col-12 col-md-12 col-lg-3 col-xxl-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title"><h1 class="sous-titre"><span></span></h1></div>
+          <div class="card-text"></div>
+        </div>
+      </div>
+    </div>
+    -->
+  </div>
+</div>
+<div class="container-fluid">
+  <br><br><br><br><br>
+</div>
+<footer>
+  <div class="row">
+   <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+<p style="color:white;"><i class="fa fa-facebook-official w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-twitter w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-instagram w3-hover-opacity" style="color: white;"></i> <br> &copy; 2021 SAHEELHA. Tous les droits sont réservés</p>
+   </div>
+  </div>
+</footer>
+<script>
+  function nbrUtilisateur(nbrClients,nbrFournisseur){
+    let ctx=document.getElementById('stat1').getContext('2d');
+    let diagramme=new Chart(ctx, {
+      type: 'pie',
+      data: {
+          labels: ['Clients','Fournisseurs'],
+          datasets: [{
+              label: 'Nombre des utilisateurs pour chaque type',
+              data: [nbrClients,nbrFournisseur],
+              backgroundColor: [
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+          }]
+      }
+  });
+  }
+  function nbrProduitsEtServices(nbrProduits,nbrServices){
+    let ctx=document.getElementById('stat2').getContext('2d');
+    let diagramme=new Chart(ctx, {
+      type: 'pie',
+      data: {
+          labels: ['Produits','Services'],
+          datasets: [{
+              label: '',
+              data: [nbrProduits,nbrServices],
+              backgroundColor: [
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+          }]
+      }
+  });
+  }
+function produitNbrCommandes(nbrProduits,nomProduits){
+  nbrProduits=JSON.parse(nbrProduits);
+  nomProduits=JSON.parse(nomProduits);
+  let i=0;
+  //nomProduits=JSON.parse(nomProduits);
+  while(i<nomProduits.length){
+    if(nomProduits[i].includes('&#039;')){
+      nomProduits[i]=nomProduits[i].replace("&#039;","'");
+     
+    }
+    i++;
+  }
+  let ctx=document.getElementById('stat3').getContext('2d');
+    let diagramme=new Chart(ctx, {
+      type: 'pie',
+      data: {
+          labels: nomProduits,
+          datasets: [{
+              label: '',
+              data: nbrProduits,
+              backgroundColor: [
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+          }]
+      }
+  });
+}
+function serviceNbrCommandes(nbrServices,nomServices){
+  let ctx=document.getElementById('stat4').getContext('2d');
+  // nbrServices=myGFG(nbrServices);
+  // nomServices=myGFG(nomServices);
+  nbrServices=JSON.parse(nbrServices);
+  let i=0;
+  nomServices=JSON.parse(nomServices);
+  while(i<nomServices.length){
+    if(nomServices[i].includes('&#039;')){
+      nomServices[i]=nomServices[i].replace("&#039;","'");
+      
+    }
+    i++;
+  }
+  console.log(nomServices);
+    let diagramme=new Chart(ctx, {
+      type: 'pie',
+      data: {
+          labels: nomServices,
+          datasets: [{
+              label: '',
+              data: nbrServices,
+              backgroundColor: [
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+          }]
+      }
+  });
+}
+function produitPlusCommande(nomProduit,valeurProduit){
+  let ctx=document.getElementById('stat5').getContext('2d');
+  nomProduit=JSON.parse(nomProduit);
+  valeurProduit=JSON.parse(valeurProduit);
+  let i=0;
+  while(i<nomProduit.length){
+    if(nomProduit[i].includes('&#039;')){
+      nomProduit[i]=nomProduit[i].replace("&#039;","'");
+      
+    }
+    i++;
+  }
+    let diagramme=new Chart(ctx, {
+      type: 'pie',
+      data: {
+          labels: nomProduit,
+          datasets: [{
+              label: '',
+              data: valeurProduit,
+              backgroundColor: [
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+          }]
+      }
+  });
+}
+
+function servicesPlusCommande(nomService,valeurService){
+  let ctx=document.getElementById('stat6').getContext('2d');
+  nomService=JSON.parse(nomService);
+  valeurService=JSON.parse(valeurService);
+  let i=0;
+  //nomServices=JSON.parse(nomServices);
+  while(i<nomService.length){
+    if(nomService[i].includes('&#039;')){
+      nomService[i]=nomService[i].replace("&#039;","'");
+     
+    }
+    i++;
+  }
+    let diagramme=new Chart(ctx, {
+      type: 'pie',
+      data: {
+          labels: nomService,
+          datasets: [{
+              label: '',
+              data: valeurService,
+              backgroundColor: [
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+          }]
+      }
+  });
+}
+function myGFG(tab) {
+            var obj = eval( tab );
+            var res = [];
+              
+            for(var i in obj)
+               {
+                res.push(obj[i]);
+               } 
+
+                return res;
+        }
+        
+</script>
+
+{% endblock %}

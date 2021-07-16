@@ -1,0 +1,192 @@
+{% extends 'base.html.twig' %} {% block title %}Mon Profil {% endblock %} {%
+  block body %}
+  <style>
+    .titre{
+        color:white;
+        font-size: xx-large;
+        text-decoration: none;
+        text-transform: uppercase;
+        text-align: center;
+		font-weight:bold;
+      }
+      .titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+  
+    .sous-titre {
+      color:black;
+        font-size: x-large;
+        text-decoration: none;
+        text-transform: uppercase;
+        text-align: center;
+		font-weight:bold;
+    }
+    .sous-titre span:hover {
+      text-decoration: none;
+        color: blue;
+        width: auto;
+    }
+  
+    .image {
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+      height: 50%;
+    }
+    footer{
+    background-color: #1a2c2d;
+    width: 100%;
+    color: white;
+    height: auto;
+    padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    font-family: calibre;
+    margin-top: 25px;
+  }
+  footer div i{
+    color: white;
+  }
+  footer i:hover{
+        color: grey;
+      }
+    .c {
+      margin-top: 50px;
+    }
+    .left {
+      background-color: white;
+      width: 100%;
+      padding: 25px;
+    }
+    .carte {
+      width: 100%;
+    }
+    .hr {
+      color: white;
+      border-top: 3px dashed black;
+    }
+    .table-t {
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .table-t tr {
+      margin-top: 50px;
+    }
+    .table-t th,
+    td {
+      text-align: center;
+      margin-top: 50px;
+    }
+    .titre-information {
+      color: black;
+      font-size: x-large;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    .information {
+      color: grey;
+      font-size: large;
+    }
+    .role {
+      color: blue;
+    }
+    /* .introduction:hover{
+        text-decoration: underline;
+      } */
+      .profil{
+        margin-top: 25px;
+    /*  background-image: url("{{asset('/bg/bg5.jpg')}}");*/
+    background-color: #30a7ab;
+    width: 100%;
+    height: fit-content;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 50px;
+    padding-top: 80px;
+    opacity: 0.8;
+    margin-bottom: 25px;
+      }
+  </style>
+  <div class="container-fluid"><br /><br /><br /><br /></div>
+  <div class="container-fluid mt-5 c">
+   <div class="row">
+   <div class="col-12 col-md-12 col-lg-2 col-xxl-2"></div>
+   <div class="col-12 col-md-12 col-lg-8 col-xxl-8">
+     <div class="row">
+      <div class="col-12 col-md-12 col-lg-3 col-xxl-3" style="background-color: #30a7ab;height:fit-content;">
+        <img src="{{asset('/img/photo_profil_utilisateurs/'~user.photo)}}" class=" mx-auto d-block mt-5" alt="..." style="border-radius: 50%;border:4px solid white;width:200px;height:200px;">
+        <p class="titre-information text-center mt-2" style="color: white;"><b>{{user.nom}} {{user.prenom}}</b></p>
+        <p class="information text-center" style="font-style: italic;color:white;"><b>fournisseur</b></p>
+       </div>
+       <div class="col-12 col-md-12 col-lg-9 col-xxl-9 mt-2 mt-lg-0 mt-xxl-0">
+         <h1 class="h1 text-center" style="text-transform: uppercase;">Informations</h1>
+         <hr style="width: 80%;color:gray">
+         <br>
+         <div class="row">
+           <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
+            <p class="titre-information"><b>Email</b></p>
+            <p class="information">{{ user.email }}</p>
+           </div>
+           <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
+            <p class="titre-information"><b>Téléphone</b></p>
+            <p class="information">{{ user.tel }}</p>
+           </div>
+         </div>
+         
+         <div class="row">
+          <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
+           <p class="titre-information"><b>Gouvernorat</b></p>
+           <p class="information">{{ user.gouvernorat }}</p>
+          </div>
+          <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
+           <p class="titre-information"><b>Adresse</b></p>
+           <p class="information">{{ user.adresse }}</p>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
+           <p class="titre-information"><b>Date d'inscription</b></p>
+           <p class="information">{{ user.dateCreation |date('d/m/y') }}</p>
+          </div>
+          <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
+           <p class="titre-information"><b>Nom de l'utilisation</b></p>
+           <p class="information">{{ user.username }}</p>
+          </div>
+        </div>
+       
+        <div class="row">
+          <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
+           <p class="titre-information"><b>Catégorie métier</b></p>
+           <p class="information">{{ user.categorieMetier  }}</p>
+          </div>
+          <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
+           <p class="titre-information"><b>Matricule fiscale</b></p>
+           <p class="information">{{ user.matriculeFiscale }}</p>
+          </div>
+        </div>
+        
+       </div>
+     </div>
+   </div>
+   <div class="col-12 col-md-12 col-lg-2 col-xxl-2"></div>
+  </div>
+  </div>
+  <div class="container-fluid">
+    <br><br><br><br><br>
+  </div>
+  <footer>
+    <div class="row">
+     <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+  <p style="color:white;"><i class="fa fa-facebook-official w3-hover-opacity" style="color: white;"></i>
+    <i class="fa fa-twitter w3-hover-opacity" style="color: white;"></i>
+    <i class="fa fa-instagram w3-hover-opacity" style="color: white;"></i> <br> &copy; 2021 SAHEELHA. Tous les droits sont réservés</p>
+     </div>
+    </div>
+  </footer>
+  {{ include("@MercurySeriesFlashy/flashy.html.twig") }}
+  {% endblock %}
+  

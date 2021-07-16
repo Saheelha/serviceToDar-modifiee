@@ -1,0 +1,164 @@
+{% extends 'base.html.twig' %} {% block title %}Se connecter{% endblock %} {%
+block body %}
+<style>
+  .titre{
+        color:#30a7ab;
+        font-size: xx-large;
+        text-decoration: none;
+        text-transform: uppercase;
+		font-weight:bold;
+    text-align: center;
+      }
+      .titre span:hover{
+        text-decoration: none;
+        color: blue;
+        width: auto;
+      }
+
+      footer{
+    background-color: #1a2c2d;
+    width: 100%;
+    color: white;
+    height: auto;
+    padding-top: 10px;
+    position: fixed;
+    bottom: 0;
+    font-family: calibre;
+    margin-top: 25px;
+  }
+  footer div i{
+    color: white;
+  }
+  footer i:hover{
+        color: grey;
+      }
+  .connexion{
+    text-decoration: none;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .connexion:hover{
+    text-decoration: underline;
+    color: dodgerblue;
+  }
+  .card{
+    margin-bottom: 50px;
+    margin-top: 150px;
+  }
+</style>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title">
+            <h1 class="h1 titre"><span>Se connecter</span></h1>
+          </div>
+          <div class="card-text">
+            <form action="" method="post">
+              {% if error %}
+              <div class="alert alert-danger text-center">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+              </div>
+              {% endif %} {% if app.user %}
+              <div class="mb-3">
+                Vous êtes déjà connecté en tant que
+                {{ app.user.username }},
+                <a href="{{ path('app_logout') }}">Logout</a>
+              </div>
+              {% endif %}
+
+              <div class="form-group mx-5 mb-3">
+                <label for="inputEmail">Adresse email *</label>
+                <input
+                  type="email"
+                  value="{{ last_username }}"
+                  name="email"
+                  id="inputEmail"
+                  class="form-control mt-3"
+                  required
+                  autofocus
+                />
+              </div>
+              <div class="form-group mx-5 mb-3">
+                <label for="inputPassword">Mot de passe *</label>
+                <input
+                  type="password"
+                  name="password"
+                  id="inputPassword"
+                  class="form-control mt-3"
+                  required
+                />
+              </div>
+
+              <div class="form-group mx-5 mt-2 text-center">
+                <a
+                  href="{{ path('app_forgotten_password') }}"
+                  class="btn btn-link connexion"
+                  >Mot de passe oublié ?</a
+                >
+              </div>
+
+              <div class="form-group mx-5">
+                <input
+                  type="hidden"
+                  name="_csrf_token"
+                  value="{{ csrf_token('authenticate') }}"
+                />
+              </div>
+
+              {# Uncomment this section and add a remember_me option
+              below your firewall to activate remember me
+              functionality. See
+              https://symfony.com/doc/current/security/remember_me.html
+
+              <div class="checkbox mb-3">
+                <label>
+                  <input type="checkbox" name="_remember_me" />
+                  Remember me
+                </label>
+              </div>
+              #}
+
+              <div class="row">
+                <div class="col-12 text-center mt-3 mb-3">
+                  <button class="btn btn-primary" type="submit">
+                    Connectez-vous
+                  </button>
+                </div>
+              </div>
+              <div class="col-12 text-center mb-3">
+                <p>Pas de compte !</p>
+                <a
+                  href="{{ path('app_type_user') }}"
+                  class="btn btn-primary"
+                  >Inscrivez-vous</a
+                >
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+  </div>
+</div>
+
+<div class="Container" id="accueil">
+  <br />
+  <br />
+  <br />
+</div>
+<footer>
+  <div class="row">
+   <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
+<p style="color:white;"><i class="fa fa-facebook-official w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-twitter w3-hover-opacity" style="color: white;"></i>
+  <i class="fa fa-instagram w3-hover-opacity" style="color: white;"></i> <br> &copy; 2021 SAHEELHA. Tous les droits sont réservés</p>
+   </div>
+  </div>
+</footer>
+{{ include("@MercurySeriesFlashy/flashy.html.twig") }}
+{% endblock %}
