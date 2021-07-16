@@ -19,9 +19,11 @@
         color: grey;
       }
 
-
+a{
+  font-family: 'Poppins';font-size: 22px;
+}
   .container {
-    margin-top: 150px;
+    margin-top: 100px;
     padding-top: 10px;
     padding-left: 25px;
     padding-right: 25px;
@@ -50,6 +52,9 @@
     margin-top: 5px;
     margin-bottom: 5px;
   }
+  body {
+    font-family: 'Poppins';font-size: 22px;
+  }
   .sous-titre{
     color:#30a7ab;
         font-size: x-large;
@@ -71,11 +76,15 @@
       text-decoration: underline;
     } */
 </style>
+
+
 <div class="container">
   <h1 class="titre"><span>Détails produit</span></h1>
-  <div class="row">
-    <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
-    <div class="col-12 col-md-12 col-lg-4 col-xxl-4">
+  <br>
+  <div class="card" style="box-shadow: 2px 2px 12px 5px #888888;">
+
+  <div class="row mt-4">
+    <div class="col-6 col-md-6">
       {% if produit.images|length == 0 %}
       <div class="alert alert-info">
         <p class="text-center">Aucune image n'est disponible pour le moment ! </p>
@@ -104,7 +113,7 @@
           <button class="btn btn-dark" data-bs-toggle="modal"
           data-bs-target="#confirmationImage" onclick="confirmationImage('{{linkImage}}')">Supprimer</button>
           {% endif %}
-          
+
         </div>
         {% else %}
         <div class="carousel-item">
@@ -119,7 +128,7 @@
           {% set link = path('app_image_produit_delete',{image:image.id}) %}
           <button class="btn btn-dark">Supprimer</button>
           {% endif %}
-          
+
         </div>
         {% endif %} {% endfor %}
       </div>
@@ -148,44 +157,42 @@
     </div>
       {% endif %}
     </div>
-    <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
-  </div>
-  <div class="row">
-    <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
-    <div class="col-12 col-md-12 col-lg-4 col-xxl-4 mt-2">
-      <div class="card">
-        <div class="card-body">
-          <div class="card-title">Les informations sur le produit</div>
-          <div class="card-text">
-            <p><strong>Prix {{ produit.prix }} DTN</strong></p>
-            <p><strong>Quantité {{ produit.quantite }}</strong></p>
-            <p><strong>Description :</strong></p>
-            <p><strong>{{ produit.description }}</strong></p>
-            <p><strong>Date de livraison : après {{produit.dateLivraison}}  jour(s) de passage de la commande</strong></p>
-            <p>Frais de livraison : {{produit.prixLivraison}} DTN</p>
-            {% if produit.poids == null %}
-            <p><strong>Poids : aucun poids</strong></p>
-            {% else %}
-              <p><strong>Poids : {{produit.poids}} Kg</strong></p>
-            {% endif %}
+    <div class="col-6 col-md-6 ">
+      <div class="m-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">Les informations sur le produit</div>
+            <div class="card-text">
+              <p><strong>Prix {{ produit.prix }} DTN</strong></p>
+              <p><strong>Quantité {{ produit.quantite }}</strong></p>
+              <p><strong>Description :</strong></p>
+              <p><strong>{{ produit.description }}</strong></p>
+              <p><strong>Date de livraison : après {{produit.dateLivraison}}  jour(s) de passage de la commande</strong></p>
+              <p>Frais de livraison : {{produit.prixLivraison}} DTN</p>
+              {% if produit.poids == null %}
+                <p><strong>Poids : aucun poids</strong></p>
+              {% else %}
+                <p><strong>Poids : {{produit.poids}} Kg</strong></p>
+              {% endif %}
+            </div>
           </div>
         </div>
+
+
       </div>
-      {% if (is_granted('ROLE_FOURNISSEUR')) or (is_granted('ROLE_ADMIN')) %}
-      {% else %}
+    </div>
+  </div>
+    {% if (is_granted('ROLE_FOURNISSEUR')) or (is_granted('ROLE_ADMIN')) %}
+    {% else %}
       <div class="text-center mt-3">
         {% if produit.utilisateur.abonnement %}
-        <a href="{{path('app_commande_produit',{produit:produit.id})}}" class="btn btn-success">Passer commande</a>
+          <a href="{{path('app_commande_produit',{produit:produit.id})}}" class="btn btn-success">Passer commande</a>
         {% else %}
-        <a href="#" data-bs-toggle="modal"
-        data-bs-target="#arretCommande" class="btn btn-success">Passer commande</a>
+          <a href="#" data-bs-toggle="modal"
+             data-bs-target="#arretCommande" class="btn btn-success">Passer commande</a>
         {% endif %}
-      </div>  
-      {% endif %}
-      
-    </div>
-    <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
-  </div>
+      </div>
+    {% endif %}
   <div class="row mb-2 mt-2">
     <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
     <div class="col-12 col-md-12 col-lg-4 col-xxl-4 text-center mt-3">
@@ -208,7 +215,7 @@
       {% set linkVideo = path('app_produit_video',{produit:produit.id}) %}
       data-bs-target="#confirmationVideo" onclick="confirmationVideo('{{linkVideo}}')">Supprimer</button>
       {% endif %}
-      
+
       {% endif %}
     </div>
     <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
@@ -274,14 +281,14 @@
                 >
                 le {{avis.CreatedAt|date('d/m/y h:m:s')}}
               </p>
-              {% if app.user %} 
+              {% if app.user %}
               {% set linkMessage = path('app_supprimer_avis',{avis:avis.id}) %}
               <button
                 type="button"
                 class="btn btn-danger"
                 data-bs-toggle="modal"
                 data-bs-target="#confirmationSupression"
-                
+
                 onclick="verifier('{{ linkMessage }}')"
               >
                 Supprimer
@@ -352,7 +359,7 @@
                 class="btn btn-danger"
                 data-bs-toggle="modal"
                 data-bs-target="#confirmationSupression"
-                
+
                 onclick="verifier('{{ linkMessage }}')"
               >
                 Supprimer
@@ -441,7 +448,7 @@
                         >
                         le {{avis.CreatedAt|date('d/m/y h:m:s')}}
                       </p>
-                      {% if app.user %} 
+                      {% if app.user %}
                       {% set linkAvis = path('app_supprimer_avis',{avis:avis.id}) %}
                       <button
                         type="button"
@@ -684,7 +691,7 @@
           </div>
         </div>
       </div>
-     
+
       <script>
         var choice = false;
         var l1 = document.getElementById("ajouter_avis_l1_star");
@@ -832,7 +839,7 @@
       </script>
       <!-- Modal -->
       {% else %}
-      
+
       {% if (is_granted('ROLE_FOURNISSEUR')) or (is_granted('ROLE_ADMIN'))  %}
       <div class="row mt-2">
         <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
@@ -845,7 +852,7 @@
             Voir la liste totale
           </button>
         </div>
-      </div>  
+      </div>
       {% else %}
       <div class="row mt-2">
         <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
@@ -863,12 +870,13 @@
             >Exprimer votre avis</a
           >
         </div>
-      </div>  
+      </div>
       {% endif %}
 
       {% endif %}
     </div>
     <div class="col-12 col-md-12 col-lg-4 col-xxl-4"></div>
+  </div>
   </div>
 </div>
 <!--
@@ -901,7 +909,7 @@
         </button>
         <a
           href="#"
-          
+
           class="btn btn-danger"
           id="supprimer"
           >Supprimer</a
@@ -1042,7 +1050,7 @@ aria-hidden="true"
       ></button>
     </div>
     <div class="modal-body">
-     
+
       <img
               src="#"
               alt=""
@@ -1084,8 +1092,8 @@ aria-hidden="true"
     let titre=document.getElementById('titreimg');
     image.src=img;
     titre.textContent=nom;
-   
-   
+
+
 $(document).ready(function(){
   $('#agrandirimg').modal('show');
 });

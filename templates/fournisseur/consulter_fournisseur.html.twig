@@ -111,15 +111,17 @@
       }
   </style>
   <div class="container-fluid"><br /><br /><br /><br /></div>
+  <h1 class="h1 text-center mt-2" style="text-transform: uppercase;">Informations</h1>
   <div class="container-fluid mt-5 c">
    <div class="row">
    <div class="col-12 col-md-12 col-lg-2 col-xxl-2"></div>
    <div class="col-12 col-md-12 col-lg-8 col-xxl-8">
      <div class="row">
-      <div class="col-12 col-md-12 col-lg-3 col-xxl-3" style="background-color: #30a7ab;height:fit-content;">
+      <div class="col-12 col-md-12 col-lg-3 col-xxl-3 mr-2" style="background-color: #30a7ab;">
         <img src="{{asset('/img/photo_profil_utilisateurs/'~user.photo)}}" class=" mx-auto d-block mt-5" alt="..." style="border-radius: 50%;border:4px solid white;width:200px;height:200px;">
         <p class="titre-information text-center mt-2" style="color: white;"><b>{{user.nom}} {{user.prenom}}</b></p>
         <p class="information text-center" style="font-style: italic;color:white;"><b>Fournisseur</b></p>
+        <p class="information" style="font-style: italic;color:white;margin-top: 80px; color: white"><p style="color: white;margin-bottom: 0rem;">DATE D'INSCRIPTION</p><b><i class="bi bi-calendar-date" style="color: white"></i> <span style="color: white">{{ user.dateCreation|date('Y-m-d') }}</span></b></p>
         {% if user.abonnement == true %}
         {% if is_granted('ROLE_CLIENT') %}
         {% if trouve == true %}
@@ -167,72 +169,52 @@
         </div>
         {% endif %}
        </div>
-       <div class="col-12 col-md-12 col-lg-9 col-xxl-9 mt-2 mt-lg-0 mt-xxl-0">
-         <h1 class="h1 text-center" style="text-transform: uppercase;">Informations</h1>
-         <hr style="width: 80%;color:gray">
-         <br>
+       <div class="col-12 col-md-12 col-lg-9 col-xxl-9 mt-2 mt-lg-0 mt-xxl-0 card">
+<br><br>
          <div class="row">
-           <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
-            <p class="titre-information"><b>Email</b></p>
-            <p class="information">{{ user.email }}</p>
-           </div>
-           <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
-            <p class="titre-information"><b>Téléphone</b></p>
-            <p class="information">{{ user.tel }}</p>
-           </div>
+            <p class="titre-information"><b><i class="bi bi-inbox-fill"></i> </b><span class="information"> {{ user.email }}</span></p>
+         </div>
+         <div class="row">
+             <p class="titre-information"><b><i class="bi bi-telephone  "></i>  </b> <span class="information">{{ user.tel }}</span></p>
+
          </div>
          
          <div class="row">
-          <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
-           <p class="titre-information"><b>Gouvernorat</b></p>
-           <p class="information">{{ user.gouvernorat }}</p>
+
+           <p class="titre-information"><b><i class="bi bi-flag   "></i>  </b> <span class="information">{{ user.gouvernorat }}</span></p>
+
           </div>
-          <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
-           <p class="titre-information"><b>Adresse</b></p>
-           <p class="information">{{ user.adresse }}</p>
-          </div>
+         <div class="row">
+           <p class="titre-information"><b><i class="bi bi-geo-alt"></i>  </b> <span class="information">{{ user.adresse }}</span></p>
+
         </div>
-        
-        <div class="row">
-          <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
-           <p class="titre-information"><b>Date d'inscription</b></p>
-           <p class="information">{{ user.dateCreation |date('d/m/y') }}</p>
-          </div>
-          <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
-           <p class="titre-information"><b>Nom de l'utilisation</b></p>
-           <p class="information">{{ user.username }}</p>
-          </div>
-        </div>
+
+         <div class="row">
+
+             <p class="titre-information"><b><i class="bi bi-person-fill"></i>  </b> <span class="information">{{ user.username }}</span></p>
+
+         </div>
        
         <div class="row">
-          <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
-           <p class="titre-information"><b>Catégorie métier</b></p>
-           <p class="information">{{ user.categorieMetier  }}</p>
-          </div>
-          <div class="col-12 col-md-12 col-lg-6 col-xxl-6 text-center">
-           <p class="titre-information"><b>Matricule fiscale</b></p>
-           <p class="information">{{ user.matriculeFiscale }}</p>
-          </div>
+
+           <p class="titre-information"><b><i class="bi bi-stack"></i>  </b>
+          <span class="information">{{ user.categorieMetier  }}</span></p>
+
         </div>
+         <div class="row">
+
+             <p class="titre-information"><b><i class="bi bi-file-earmark-code"></i>  </b> <span class="information">{{ user.matriculeFiscale }}</span></p>
+
+
+         </div>
         <!-- ------------------------------- -->
         <div class="row">
-          <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
-            <p class="titre-information">Description</p>
-            <p class="information">{{user.description}}</p>
-          </div>
+            <p class="titre-information"><i class="bi bi-card-text"></i>  <span class="information">{{user.description}}</span></p>
+
         </div>
         <div class="row">
           {% if produits|length > 0 and services|length == 0 %}
-          <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
-            <button
-                      type="button"
-                      class="btn bg-dark text-light"
-                      data-bs-toggle="modal"
-                      data-bs-target="#produits"
-                    >
-                      Produits
-                    </button>
-          </div>
+
           {% endif %}
           {% if produits|length == 0 and services|length > 0 %}
           <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
@@ -268,6 +250,8 @@
                     </button>
           </div>
           {% endif %}
+
+
         </div>
         <!-- ------------------------------- -->
         
@@ -277,9 +261,57 @@
    <div class="col-12 col-md-12 col-lg-2 col-xxl-2"></div>
   </div>
   </div>
-  <div class="container-fluid">
-    <br><br><br><br><br>
+  <div class="container-fluid mt-3">
+    <div class="row mt-4 mb-4">
+      <div class="col-12 col-md-12 col-lg-12 col-xxl-12">
+        <h1 class="titre text-center"><span STYLE="color: #2c334e">Les produits</span></h1>
+      </div>
+    </div>
+    {% if produits|length > 0 %}
+      <div class="row mt-3">
+        {% for produit in produits %}
+          <div class="col-12 col-md-12 col-lg-3 col-xxl-3">
+            <div class="card " style="box-shadow: 2px 2px 12px 5px #888888;">
+              <div class="card-body">
+                <div class="card-title sous-titre text-center"><span>{{produit.nom}}</span></div>
+                {% for image in produit.images %}
+                  {% if loop.last %}
+                    <img
+                            src="{{asset('/img/produits/'~image.titre)}}"
+                            class="card-img-top img-thumbnail img-fluid image mx-auto d-block"
+                            alt="{{ produit.nom }}"
+                            onclick="enlarge(this.src,'{{produit.nom}}')"
+                            data-bs-toggle="modal" data-bs-target="#zoomimage"
+                    />
+
+                  {% endif %}
+                {% endfor %}
+                <div class="card-text text-center mt-2">
+                  <div class="row">
+                    <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center mb-2">
+                      <p><strong>Prix {{produit.prix}}</strong></p>
+                    </div>
+                  </div>
+                  <a
+                          href="{{
+                          path('app_details_produit', { produit: produit.id })
+                          }}"
+                          class="btn btn-info"
+                  >Voir détails</a
+                  > </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+
+      </div>
+
+    {% endif %}
   </div>
+  <br>
+  <br><br>
+  <br><br>
+
   <footer>
     <div class="row">
      <div class="col-12 col-md-12 col-lg-12 col-xxl-12 text-center">
